@@ -9,7 +9,7 @@ namespace ControleMetas.Repositories
 {
     public class VendedorRepository
     {
-        private List<VendedorModel> _vendedores = new List<VendedorModel>();
+        private static List<VendedorModel> _vendedores = [];
 
         public string Add(VendedorModel vendedor)
         {

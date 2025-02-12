@@ -40,12 +40,13 @@
             vendedorComboBox = new ComboBox();
             valorLabel = new Label();
             valorTextBox = new TextBox();
-            label1 = new Label();
-            comboBox1 = new ComboBox();
+            periodicidadeLabel = new Label();
+            periodicidadeComboBox = new ComboBox();
             nomeLabel = new Label();
             adicionarButton = new Button();
             cancelarButton = new Button();
             botoesTableLayoutPanel = new TableLayoutPanel();
+            errorLabel = new Label();
             cadastrarMetaGroupBox.SuspendLayout();
             cadastroTableLayoutPanel.SuspendLayout();
             botoesTableLayoutPanel.SuspendLayout();
@@ -53,17 +54,16 @@
             // 
             // cadastrarMetaGroupBox
             // 
+            cadastrarMetaGroupBox.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             cadastrarMetaGroupBox.Controls.Add(cadastroTableLayoutPanel);
             cadastrarMetaGroupBox.Font = new Font("Segoe UI", 9F);
             cadastrarMetaGroupBox.ForeColor = Color.White;
             cadastrarMetaGroupBox.Location = new Point(20, 14);
-            cadastrarMetaGroupBox.MinimumSize = new Size(328, 496);
             cadastrarMetaGroupBox.Name = "cadastrarMetaGroupBox";
-            cadastrarMetaGroupBox.Size = new Size(356, 496);
+            cadastrarMetaGroupBox.Size = new Size(355, 208);
             cadastrarMetaGroupBox.TabIndex = 1;
             cadastrarMetaGroupBox.TabStop = false;
-            cadastrarMetaGroupBox.Text = "Cadastrar Nova Meta";
-            cadastrarMetaGroupBox.Enter += groupBox1_Enter;
+            cadastrarMetaGroupBox.Text = "[+] Adicionar Nova Meta";
             // 
             // cadastroTableLayoutPanel
             // 
@@ -81,52 +81,53 @@
             cadastroTableLayoutPanel.Controls.Add(vendedorComboBox, 1, 3);
             cadastroTableLayoutPanel.Controls.Add(valorLabel, 0, 4);
             cadastroTableLayoutPanel.Controls.Add(valorTextBox, 1, 4);
-            cadastroTableLayoutPanel.Controls.Add(label1, 0, 5);
-            cadastroTableLayoutPanel.Controls.Add(comboBox1, 1, 5);
+            cadastroTableLayoutPanel.Controls.Add(periodicidadeLabel, 0, 5);
+            cadastroTableLayoutPanel.Controls.Add(periodicidadeComboBox, 1, 5);
             cadastroTableLayoutPanel.Controls.Add(nomeLabel, 0, 0);
-            cadastroTableLayoutPanel.Dock = DockStyle.Fill;
             cadastroTableLayoutPanel.Location = new Point(3, 19);
             cadastroTableLayoutPanel.Name = "cadastroTableLayoutPanel";
             cadastroTableLayoutPanel.Padding = new Padding(3);
             cadastroTableLayoutPanel.RowCount = 6;
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.66667F));
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.666666F));
-            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 16.66667F));
-            cadastroTableLayoutPanel.Size = new Size(350, 474);
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 29F));
+            cadastroTableLayoutPanel.Size = new Size(340, 180);
             cadastroTableLayoutPanel.TabIndex = 2;
-            cadastroTableLayoutPanel.Paint += cadastroTableLayoutPanel_Paint;
+            cadastroTableLayoutPanel.Paint += CadastroTableLayoutPanel_Paint;
             // 
             // categoriaLabel
             // 
-            categoriaLabel.Anchor = AnchorStyles.Right;
+            categoriaLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             categoriaLabel.AutoSize = true;
             categoriaLabel.ForeColor = Color.Yellow;
-            categoriaLabel.Location = new Point(27, 189);
+            categoriaLabel.Location = new Point(6, 75);
             categoriaLabel.Name = "categoriaLabel";
-            categoriaLabel.Size = new Size(58, 15);
+            categoriaLabel.Size = new Size(93, 15);
             categoriaLabel.TabIndex = 4;
-            categoriaLabel.Text = "Categoria";
+            categoriaLabel.Text = "Tipo de Produto";
             categoriaLabel.TextAlign = ContentAlignment.MiddleRight;
+            categoriaLabel.Click += CategoriaLabel_Click;
             // 
             // categoriaComboBox
             // 
-            categoriaComboBox.Anchor = AnchorStyles.Left;
+            categoriaComboBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            categoriaComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             categoriaComboBox.ForeColor = Color.Black;
             categoriaComboBox.FormattingEnabled = true;
-            categoriaComboBox.Location = new Point(91, 185);
+            categoriaComboBox.Location = new Point(105, 64);
             categoriaComboBox.Name = "categoriaComboBox";
             categoriaComboBox.Size = new Size(229, 23);
             categoriaComboBox.TabIndex = 5;
             // 
             // formatoLabel
             // 
-            formatoLabel.Anchor = AnchorStyles.Right;
+            formatoLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             formatoLabel.AutoSize = true;
             formatoLabel.ForeColor = Color.Yellow;
-            formatoLabel.Location = new Point(33, 112);
+            formatoLabel.Location = new Point(47, 46);
             formatoLabel.Name = "formatoLabel";
             formatoLabel.RightToLeft = RightToLeft.No;
             formatoLabel.Size = new Size(52, 15);
@@ -136,19 +137,21 @@
             // 
             // formatoComboBox
             // 
-            formatoComboBox.Anchor = AnchorStyles.Left;
+            formatoComboBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            formatoComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             formatoComboBox.ForeColor = Color.Black;
             formatoComboBox.FormattingEnabled = true;
-            formatoComboBox.Location = new Point(91, 108);
+            formatoComboBox.Location = new Point(105, 35);
             formatoComboBox.Name = "formatoComboBox";
             formatoComboBox.Size = new Size(229, 23);
             formatoComboBox.TabIndex = 3;
+            formatoComboBox.SelectedIndexChanged += FormatoComboBox_SelectedIndexChanged;
             // 
             // nomeMetaTextBox
             // 
-            nomeMetaTextBox.Anchor = AnchorStyles.Left;
+            nomeMetaTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             nomeMetaTextBox.ForeColor = Color.Black;
-            nomeMetaTextBox.Location = new Point(91, 30);
+            nomeMetaTextBox.Location = new Point(105, 6);
             nomeMetaTextBox.Name = "nomeMetaTextBox";
             nomeMetaTextBox.PlaceholderText = "Digite o nome da meta";
             nomeMetaTextBox.Size = new Size(229, 23);
@@ -156,10 +159,10 @@
             // 
             // vendedorLabel
             // 
-            vendedorLabel.Anchor = AnchorStyles.Right;
+            vendedorLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             vendedorLabel.AutoSize = true;
             vendedorLabel.ForeColor = Color.Yellow;
-            vendedorLabel.Location = new Point(28, 266);
+            vendedorLabel.Location = new Point(42, 104);
             vendedorLabel.Name = "vendedorLabel";
             vendedorLabel.Size = new Size(57, 15);
             vendedorLabel.TabIndex = 7;
@@ -168,20 +171,21 @@
             // 
             // vendedorComboBox
             // 
-            vendedorComboBox.Anchor = AnchorStyles.Left;
+            vendedorComboBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            vendedorComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             vendedorComboBox.ForeColor = Color.Black;
             vendedorComboBox.FormattingEnabled = true;
-            vendedorComboBox.Location = new Point(91, 262);
+            vendedorComboBox.Location = new Point(105, 93);
             vendedorComboBox.Name = "vendedorComboBox";
             vendedorComboBox.Size = new Size(229, 23);
             vendedorComboBox.TabIndex = 8;
             // 
             // valorLabel
             // 
-            valorLabel.Anchor = AnchorStyles.Right;
+            valorLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             valorLabel.AutoSize = true;
             valorLabel.ForeColor = Color.Yellow;
-            valorLabel.Location = new Point(52, 343);
+            valorLabel.Location = new Point(66, 133);
             valorLabel.Name = "valorLabel";
             valorLabel.Size = new Size(33, 15);
             valorLabel.TabIndex = 9;
@@ -190,43 +194,45 @@
             // 
             // valorTextBox
             // 
-            valorTextBox.Anchor = AnchorStyles.Left;
+            valorTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             valorTextBox.ForeColor = Color.Black;
-            valorTextBox.Location = new Point(91, 339);
+            valorTextBox.Location = new Point(105, 122);
             valorTextBox.Name = "valorTextBox";
             valorTextBox.PlaceholderText = "Digite o valor da meta";
             valorTextBox.Size = new Size(229, 23);
             valorTextBox.TabIndex = 10;
-            valorTextBox.TextChanged += valorTextBox_TextChanged;
+            valorTextBox.TextChanged += ValorTextBox_TextChanged;
             // 
-            // label1
+            // periodicidadeLabel
             // 
-            label1.Anchor = AnchorStyles.Right;
-            label1.AutoSize = true;
-            label1.ForeColor = Color.Yellow;
-            label1.Location = new Point(6, 422);
-            label1.Name = "label1";
-            label1.Size = new Size(79, 15);
-            label1.TabIndex = 11;
-            label1.Text = "Periodicidade";
-            label1.TextAlign = ContentAlignment.MiddleRight;
+            periodicidadeLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            periodicidadeLabel.AutoSize = true;
+            periodicidadeLabel.ForeColor = Color.Yellow;
+            periodicidadeLabel.Location = new Point(20, 162);
+            periodicidadeLabel.Name = "periodicidadeLabel";
+            periodicidadeLabel.Size = new Size(79, 15);
+            periodicidadeLabel.TabIndex = 11;
+            periodicidadeLabel.Text = "Periodicidade";
+            periodicidadeLabel.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // comboBox1
+            // periodicidadeComboBox
             // 
-            comboBox1.Anchor = AnchorStyles.Left;
-            comboBox1.ForeColor = Color.Black;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(91, 418);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(229, 23);
-            comboBox1.TabIndex = 12;
+            periodicidadeComboBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            periodicidadeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            periodicidadeComboBox.ForeColor = Color.Black;
+            periodicidadeComboBox.FormattingEnabled = true;
+            periodicidadeComboBox.Location = new Point(105, 151);
+            periodicidadeComboBox.Name = "periodicidadeComboBox";
+            periodicidadeComboBox.Size = new Size(229, 23);
+            periodicidadeComboBox.TabIndex = 12;
+            periodicidadeComboBox.SelectedIndexChanged += PeriodicidadeComboBox_SelectedIndexChanged;
             // 
             // nomeLabel
             // 
-            nomeLabel.Anchor = AnchorStyles.Right;
+            nomeLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             nomeLabel.AutoSize = true;
             nomeLabel.ForeColor = Color.Yellow;
-            nomeLabel.Location = new Point(48, 34);
+            nomeLabel.Location = new Point(62, 17);
             nomeLabel.Margin = new Padding(0);
             nomeLabel.Name = "nomeLabel";
             nomeLabel.RightToLeft = RightToLeft.No;
@@ -234,44 +240,48 @@
             nomeLabel.TabIndex = 0;
             nomeLabel.Text = "Nome";
             nomeLabel.TextAlign = ContentAlignment.MiddleRight;
-            nomeLabel.Click += nomeLabel_Click;
+            nomeLabel.Click += NomeLabel_Click;
             // 
             // adicionarButton
             // 
-            adicionarButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            adicionarButton.BackColor = Color.Lime;
+            adicionarButton.Anchor = AnchorStyles.Right;
+            adicionarButton.BackColor = Color.Green;
             adicionarButton.Cursor = Cursors.Hand;
-            adicionarButton.FlatAppearance.BorderColor = Color.LimeGreen;
-            adicionarButton.FlatAppearance.MouseDownBackColor = Color.Green;
+            adicionarButton.FlatAppearance.BorderColor = Color.White;
+            adicionarButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
             adicionarButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
             adicionarButton.FlatStyle = FlatStyle.Flat;
             adicionarButton.Font = new Font("Segoe UI", 12F);
-            adicionarButton.ForeColor = Color.Black;
-            adicionarButton.Location = new Point(181, 3);
+            adicionarButton.ForeColor = Color.White;
+            adicionarButton.Location = new Point(135, 12);
+            adicionarButton.MinimumSize = new Size(115, 32);
             adicionarButton.Name = "adicionarButton";
-            adicionarButton.Size = new Size(92, 32);
+            adicionarButton.Size = new Size(115, 32);
             adicionarButton.TabIndex = 0;
-            adicionarButton.Text = "Adicionar";
+            adicionarButton.Text = "Adicionar [+]";
             adicionarButton.UseVisualStyleBackColor = false;
-            adicionarButton.Click += adicionarButton_Click;
+            adicionarButton.Click += AdicionarButton_Click;
             // 
             // cancelarButton
             // 
-            cancelarButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            cancelarButton.BackColor = SystemColors.ButtonHighlight;
+            cancelarButton.Anchor = AnchorStyles.Left;
+            cancelarButton.BackColor = Color.Transparent;
+            cancelarButton.CausesValidation = false;
             cancelarButton.Cursor = Cursors.Hand;
-            cancelarButton.FlatAppearance.BorderColor = Color.Silver;
-            cancelarButton.FlatAppearance.MouseDownBackColor = Color.Gray;
-            cancelarButton.FlatAppearance.MouseOverBackColor = Color.DarkGray;
+            cancelarButton.FlatAppearance.BorderColor = Color.White;
+            cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
+            cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
             cancelarButton.FlatStyle = FlatStyle.Flat;
             cancelarButton.Font = new Font("Segoe UI", 12F);
-            cancelarButton.ForeColor = Color.Black;
-            cancelarButton.Location = new Point(279, 3);
+            cancelarButton.ForeColor = Color.White;
+            cancelarButton.Location = new Point(256, 12);
+            cancelarButton.MinimumSize = new Size(115, 32);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(92, 32);
+            cancelarButton.Size = new Size(115, 32);
             cancelarButton.TabIndex = 1;
-            cancelarButton.Text = "Cancelar";
+            cancelarButton.Text = "< Voltar (Esc)";
             cancelarButton.UseVisualStyleBackColor = false;
+            cancelarButton.Click += CancelarButton_Click;
             // 
             // botoesTableLayoutPanel
             // 
@@ -281,13 +291,21 @@
             botoesTableLayoutPanel.Controls.Add(cancelarButton, 1, 0);
             botoesTableLayoutPanel.Controls.Add(adicionarButton, 0, 0);
             botoesTableLayoutPanel.Dock = DockStyle.Bottom;
-            botoesTableLayoutPanel.Location = new Point(5, 545);
+            botoesTableLayoutPanel.Location = new Point(5, 255);
             botoesTableLayoutPanel.Name = "botoesTableLayoutPanel";
             botoesTableLayoutPanel.RowCount = 1;
             botoesTableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            botoesTableLayoutPanel.Size = new Size(374, 61);
+            botoesTableLayoutPanel.Size = new Size(374, 56);
             botoesTableLayoutPanel.TabIndex = 2;
-            botoesTableLayoutPanel.Paint += botoesTableLayoutPanel_Paint;
+            botoesTableLayoutPanel.Paint += BotoesTableLayoutPanel_Paint;
+            // 
+            // errorLabel
+            // 
+            errorLabel.AutoSize = true;
+            errorLabel.Location = new Point(20, 237);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(0, 15);
+            errorLabel.TabIndex = 3;
             // 
             // FrmCadastroMeta
             // 
@@ -298,18 +316,19 @@
             AutoValidate = AutoValidate.EnablePreventFocusChange;
             BackColor = Color.FromArgb(33, 46, 61);
             CancelButton = cancelarButton;
-            ClientSize = new Size(384, 611);
+            ClientSize = new Size(384, 316);
+            Controls.Add(errorLabel);
             Controls.Add(botoesTableLayoutPanel);
             Controls.Add(cadastrarMetaGroupBox);
             ForeColor = Color.White;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
-            MinimumSize = new Size(400, 650);
+            MinimumSize = new Size(400, 355);
             Name = "FrmCadastroMeta";
             Padding = new Padding(5);
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Cadastrar Nova Meta";
+            Text = "[+] Adicionar Nova Meta";
             Load += FrmCadastroMeta_Load;
             cadastrarMetaGroupBox.ResumeLayout(false);
             cadastrarMetaGroupBox.PerformLayout();
@@ -317,6 +336,7 @@
             cadastroTableLayoutPanel.PerformLayout();
             botoesTableLayoutPanel.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -332,10 +352,11 @@
         private ComboBox vendedorComboBox;
         private Label valorLabel;
         private TextBox valorTextBox;
-        private Label label1;
-        private ComboBox comboBox1;
+        private Label periodicidadeLabel;
+        private ComboBox periodicidadeComboBox;
         private Button adicionarButton;
         private Button cancelarButton;
         private TableLayoutPanel botoesTableLayoutPanel;
+        private Label errorLabel;
     }
 }

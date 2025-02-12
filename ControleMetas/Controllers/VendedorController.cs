@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using ControleMetas.Exceptions;
 using ControleMetas.Models;
 using ControleMetas.Repositories;
+using ControleMetas.Utils.FormatUtils;
 
 namespace ControleMetas.Controllers
 {
     public class VendedorController
     {
-        private VendedorRepository VendedorRepository = new VendedorRepository();
+        private VendedorRepository VendedorRepository = new();
 
         public List<VendedorModel> Get()
         {
@@ -30,7 +31,9 @@ namespace ControleMetas.Controllers
             if (vendedor == null) throw new BusinessException("O vendedor não pode ser nulo.");
 
             vendedor.Id = Guid.NewGuid().ToString();
-            
+
+            vendedor.Nome = FormatUtils.FormatarNome(vendedor.Nome);
+
             return VendedorRepository.Add(vendedor);
         }
 
@@ -42,9 +45,7 @@ namespace ControleMetas.Controllers
 
             var vendedorAtualizado = VendedorRepository.Update(id, vendedor);
 
-            if (vendedorAtualizado == null) throw new NotFoundException($"O vendedor com Id {id} não foi encontrado.");
-
-            return vendedorAtualizado;
+            return vendedorAtualizado ?? throw new NotFoundException($"O vendedor com Id {id} não foi encontrado.");
         }
 
         public string? Delete(string id)
@@ -53,9 +54,7 @@ namespace ControleMetas.Controllers
 
             var vendedorRemovido = VendedorRepository.Remove(id);
 
-            if (vendedorRemovido == null) throw new NotFoundException($"O vendedor com Id {id} não foi encontrado.");
-
-            return vendedorRemovido;
+            return vendedorRemovido ?? throw new NotFoundException($"O vendedor com Id {id} não foi encontrado.");
         }
 
 

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using ControleMetas.Exceptions;
 using ControleMetas.Models;
 using ControleMetas.Repositories;
+using ControleMetas.Utils.FormatUtils;
 
 namespace ControleMetas.Controllers
 {
     public class MetaController
     {
-        private MetaRepository MetaRepository = new MetaRepository();
+        private MetaRepository MetaRepository = new();
 
         public List<MetaModel> Get()
         {
@@ -25,9 +26,7 @@ namespace ControleMetas.Controllers
 
             var meta = MetaRepository.FindById(id);
 
-            if (meta == null) throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
-
-            return meta;
+            return meta ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
 
         public string Create(MetaModel meta)
@@ -35,6 +34,8 @@ namespace ControleMetas.Controllers
             if (meta == null) throw new BusinessException("A meta não pode ser nula.");
 
             meta.Id = Guid.NewGuid().ToString();
+
+            meta.Nome = FormatUtils.FormatarNome(meta.Nome);
 
             return MetaRepository.Add(meta);
         }
@@ -47,9 +48,7 @@ namespace ControleMetas.Controllers
 
             var metaAtualizada = MetaRepository.Update(id, meta);
 
-            if (metaAtualizada == null) throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
-
-            return metaAtualizada;
+            return metaAtualizada ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
 
         public string? Delete(string id)
@@ -58,9 +57,7 @@ namespace ControleMetas.Controllers
 
             var metaRemovida = MetaRepository.Remove(id);
 
-            if (metaRemovida == null) throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
-
-            return metaRemovida;
+            return metaRemovida ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
     }
 }

@@ -10,7 +10,6 @@ namespace ControleMetas.Models.Enum
     {
         Barris,
         Garrafas,
-        Latas,
         Acessorios,
         Produtos,
     }

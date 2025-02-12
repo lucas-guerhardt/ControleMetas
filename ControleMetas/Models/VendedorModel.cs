@@ -15,9 +15,8 @@ namespace ControleMetas.Models
 
         public VendedorModel() { }
 
-        public VendedorModel(string id, string nome)
+        public VendedorModel(string nome)
         {
-            Id = id;
             Nome = nome;
         }
     }

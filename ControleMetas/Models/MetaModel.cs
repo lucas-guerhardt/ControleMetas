@@ -25,9 +25,8 @@ namespace ControleMetas.Models
 
         public MetaModel() { }
 
-        public MetaModel(string id, string nome, string vendedor, FormatoMetaEnum formato, CategoriaMetaEnum categoria, PeriodicidadeMetaEnum periodicidade, decimal valor)
+        public MetaModel(string nome, string vendedor, FormatoMetaEnum formato, CategoriaMetaEnum categoria, PeriodicidadeMetaEnum periodicidade, decimal valor)
         {
-            Id = id;
             Vendedor = vendedor;
             Nome = nome;
             Formato = formato;

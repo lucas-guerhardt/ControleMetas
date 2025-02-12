@@ -9,7 +9,7 @@ namespace ControleMetas.Repositories
 {
     public class MetaRepository
     {
-        private List<MetaModel> _metas = new List<MetaModel>();
+        private static List<MetaModel> _metas = [];
 
         public string Add(MetaModel meta)
         {

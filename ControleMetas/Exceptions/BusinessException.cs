@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleMetas.Exceptions
 {
-    public class BusinessException : Exception
+    public class BusinessException(string message) : Exception(message)
     {
-        public BusinessException(string message) : base(message) { }
     }
 }
