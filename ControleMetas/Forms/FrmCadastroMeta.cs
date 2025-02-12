@@ -149,6 +149,27 @@ namespace ControleMetas.Forms
             }
         }
 
+        private void ValorTextBox_Enter(object sender, EventArgs e)
+        {
+            try
+            {
+                if (valorTextBox.Text == string.Empty) return;
+
+                string? formatoSelecionado = formatoComboBox.GetItemText(formatoComboBox.SelectedItem);
+
+                string valorSemFormatacao = new(valorTextBox.Text.Where(char.IsDigit).ToArray());
+
+                valorTextBox.Text = FormatUtils.FormatarValor(valorSemFormatacao, formatoSelecionado);
+
+                valorTextBox.SelectionStart = valorTextBox.Text.Length;
+
+            }
+            catch (NotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void ValorTextBox_Leave(object sender, EventArgs e)
         {
@@ -193,10 +214,20 @@ namespace ControleMetas.Forms
             if (formatoSelecionado == "Litros")
             {
                 categoriaComboBox.DataSource = Enum.GetValues(typeof(CategoriaMetaEnum)).Cast<CategoriaMetaEnum>().Where(c => c == CategoriaMetaEnum.Barris || c == CategoriaMetaEnum.Garrafas).ToList();
+                valorTextBox.Text = "0,00 L";
             }
             else
             {
                 categoriaComboBox.DataSource = Enum.GetValues(typeof(CategoriaMetaEnum));
+            }
+
+            if (formatoSelecionado == "Monetario")
+            {
+                valorTextBox.Text = "R$ 0,00";
+            }
+            else
+            {
+                valorTextBox.Text = "0,00 UN";
             }
         }
 

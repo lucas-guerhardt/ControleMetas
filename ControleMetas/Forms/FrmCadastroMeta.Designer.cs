@@ -205,6 +205,7 @@
             valorTextBox.TextChanged += ValorTextBox_TextChanged;
             valorTextBox.Leave += ValorTextBox_Leave;
             valorTextBox.KeyPress += ValorTextBox_KeyPress;
+            valorTextBox.Enter += ValorTextBox_Enter;
             // 
             // periodicidadeLabel
             // 
