@@ -194,10 +194,9 @@
             valorTextBox.ForeColor = Color.Black;
             valorTextBox.Location = new Point(91, 339);
             valorTextBox.Name = "valorTextBox";
-            valorTextBox.PlaceholderText = "R$ 0,00";
+            valorTextBox.PlaceholderText = "Digite o valor da meta";
             valorTextBox.Size = new Size(229, 23);
             valorTextBox.TabIndex = 10;
-            valorTextBox.Text = "R$ 0,00";
             valorTextBox.TextChanged += valorTextBox_TextChanged;
             // 
             // label1
