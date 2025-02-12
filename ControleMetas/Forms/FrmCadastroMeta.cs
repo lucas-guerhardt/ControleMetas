@@ -41,12 +41,6 @@ namespace ControleMetas.Forms
             Data.GerarVendedores();
 
             var listaVendedores = VendedorController.Get();
-            Debug.WriteLine($"Total de vendedores: {listaVendedores.Count}");
-
-            foreach (var vendedor in listaVendedores)
-            {
-                Debug.WriteLine($"Vendedor: {vendedor.Nome}");
-            }
 
             formatoComboBox.DataSource = Enum.GetValues(typeof(FormatoMetaEnum));
 
@@ -66,12 +60,28 @@ namespace ControleMetas.Forms
 
         }
 
-        private void SplitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        private void NomeMetaTextBox_TextChanged(object sender, EventArgs e)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(nomeMetaTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
+                nomeMetaTextBox.BackColor = Color.White;
+            }
+            catch (BusinessException ex)
+            {
+                nomeMetaTextBox.BackColor = Color.FromArgb(252, 199, 194);
+                FormatUtils.FormatarErroLabel(errorLabel, ex.Message);
+            }
         }
 
         private void AdicionarButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if(string.IsNullOrEmpty(nomeMetaTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
+
+                if (string.IsNullOrEmpty(valorTextBox.Text)) throw new BusinessException("O valor não deve ser nulo.");
+
                 var novaMeta = new MetaModel
                 {
                     Nome = nomeMetaTextBox.Text,
@@ -82,8 +92,12 @@ namespace ControleMetas.Forms
                     Valor = decimal.Parse(new string(valorTextBox.Text.Where(c => char.IsDigit(c)).ToArray()))
                 };
 
-            try
-            {
+                if (novaMeta.Valor <= 0) throw new BusinessException("O valor deve ser maior que zero.");
+
+                if (!char.IsLetter(novaMeta.Nome[0])) throw new BusinessException("O nome deve começar com uma letra.");
+
+
+
                 MetaController.Create(novaMeta);
                 MessageBox.Show("Meta criada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -103,9 +117,9 @@ namespace ControleMetas.Forms
         {
             try
             {
-                if (string.IsNullOrEmpty(valorTextBox.Text)) return;
-
                 valorTextBox.BackColor = Color.White;
+
+                if (string.IsNullOrEmpty(valorTextBox.Text)) throw new BusinessException("O valor não deve ser nulo.");
 
                 string? formatoSelecionado = formatoComboBox.GetItemText(formatoComboBox.SelectedItem);
 
@@ -120,12 +134,21 @@ namespace ControleMetas.Forms
                 else
                     valorTextBox.SelectionStart = valorTextBox.Text.Length - 3;
             }
-            catch (NotFoundException ex)
+            catch (Exception ex)
             {
                 valorTextBox.BackColor = Color.FromArgb(252, 199, 194);
                 FormatUtils.FormatarErroLabel(errorLabel, ex.Message);
             }
         }
+
+        private void ValorTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char) Keys.Back)
+            {
+                e.Handled = true;
+            }
+        }
+
 
         private void ValorTextBox_Leave(object sender, EventArgs e)
         {

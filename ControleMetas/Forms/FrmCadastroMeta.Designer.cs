@@ -156,6 +156,7 @@
             nomeMetaTextBox.PlaceholderText = "Digite o nome da meta";
             nomeMetaTextBox.Size = new Size(229, 23);
             nomeMetaTextBox.TabIndex = 1;
+            nomeMetaTextBox.TextChanged += NomeMetaTextBox_TextChanged;
             // 
             // vendedorLabel
             // 
@@ -202,6 +203,8 @@
             valorTextBox.Size = new Size(229, 23);
             valorTextBox.TabIndex = 10;
             valorTextBox.TextChanged += ValorTextBox_TextChanged;
+            valorTextBox.Leave += ValorTextBox_Leave;
+            valorTextBox.KeyPress += ValorTextBox_KeyPress;
             // 
             // periodicidadeLabel
             // 
