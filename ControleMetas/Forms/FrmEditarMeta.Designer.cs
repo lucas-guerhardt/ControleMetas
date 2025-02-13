@@ -89,7 +89,7 @@
             salvarButton.FlatAppearance.MouseDownBackColor = Color.DarkOrange;
             salvarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
             salvarButton.FlatStyle = FlatStyle.Flat;
-            salvarButton.Font = new Font("Montserrat", 8.999999F);
+            salvarButton.Font = new Font("Montserrat", 12F);
             salvarButton.ForeColor = Color.White;
             salvarButton.Location = new Point(295, 4);
             salvarButton.Margin = new Padding(3, 4, 3, 4);
@@ -110,7 +110,7 @@
             cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
             cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
             cancelarButton.FlatStyle = FlatStyle.Flat;
-            cancelarButton.Font = new Font("Montserrat", 8.999999F);
+            cancelarButton.Font = new Font("Montserrat", 12F);
             cancelarButton.ForeColor = Color.White;
             cancelarButton.Location = new Point(149, 4);
             cancelarButton.Margin = new Padding(3, 4, 3, 4);
@@ -130,7 +130,7 @@
             excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkRed;
             excluirButton.FlatAppearance.MouseOverBackColor = Color.Firebrick;
             excluirButton.FlatStyle = FlatStyle.Flat;
-            excluirButton.Font = new Font("Montserrat", 8.999999F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            excluirButton.Font = new Font("Montserrat", 12F);
             excluirButton.ForeColor = Color.White;
             excluirButton.Location = new Point(3, 4);
             excluirButton.Margin = new Padding(3, 4, 3, 4);
@@ -398,6 +398,8 @@
             Font = new Font("Montserrat", 8.999999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
             MinimumSize = new Size(455, 472);
             Name = "FrmEditarMeta";
             StartPosition = FormStartPosition.CenterScreen;

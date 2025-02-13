@@ -75,9 +75,14 @@ namespace ControleMetas.Forms
                 ExcluirButton_Click(sender, e);
             }
 
-            if(e.KeyCode == Keys.F3)
+            if (e.KeyCode == Keys.F3)
             {
                 EditarButton_Click(sender, e);
+            }
+
+            if(e.KeyCode == Keys.F11)
+            {
+                BuscarButton_Click(sender, e);
             }
         }
 
@@ -254,6 +259,39 @@ namespace ControleMetas.Forms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro ao Editar Meta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BuscarButton_Click(object sender, EventArgs e)
+        {
+            if(buscarTextBox.Visible)
+            {
+                buscarTextBox.Visible = false;
+                buscarTextBox.Text = string.Empty;
+                return;
+            }
+
+            buscarTextBox.Visible = true;
+            buscarTextBox.Focus();
+        }
+
+        private void BuscarTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (metas == null) return;
+
+            string filtro = buscarTextBox.Text.Trim().ToLower();
+
+            if(string.IsNullOrEmpty(filtro))
+            {
+                metasDataGridView.DataSource = bindingList;
+            }
+            else
+            {
+                var metasFiltradas = metas
+                    .Where(m => m.Nome.ToLower().Contains(filtro) || m.Vendedor.ToLower().Contains(filtro))
+                    .ToList();
+
+                metasDataGridView.DataSource = new BindingList<MetaModel>(metasFiltradas);
             }
         }
     }

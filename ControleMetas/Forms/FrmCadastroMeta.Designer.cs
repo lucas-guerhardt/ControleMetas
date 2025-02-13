@@ -268,7 +268,7 @@
             adicionarButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
             adicionarButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
             adicionarButton.FlatStyle = FlatStyle.Flat;
-            adicionarButton.Font = new Font("Montserrat", 8.999999F);
+            adicionarButton.Font = new Font("Montserrat", 12F);
             adicionarButton.ForeColor = Color.White;
             adicionarButton.Location = new Point(156, 14);
             adicionarButton.Margin = new Padding(3, 4, 3, 4);
@@ -290,7 +290,7 @@
             cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
             cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
             cancelarButton.FlatStyle = FlatStyle.Flat;
-            cancelarButton.Font = new Font("Montserrat", 8.999999F);
+            cancelarButton.Font = new Font("Montserrat", 12F);
             cancelarButton.ForeColor = Color.White;
             cancelarButton.Location = new Point(293, 14);
             cancelarButton.Margin = new Padding(3, 4, 3, 4);

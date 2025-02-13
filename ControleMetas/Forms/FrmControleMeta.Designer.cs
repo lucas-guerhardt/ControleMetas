@@ -37,6 +37,7 @@
             buscarButton = new Button();
             metasDataGridView = new DataGridView();
             nenhumaMetaLabel = new Label();
+            buscarTextBox = new TextBox();
             botoesTablePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)metasDataGridView).BeginInit();
             SuspendLayout();
@@ -73,7 +74,7 @@
             excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkRed;
             excluirButton.FlatAppearance.MouseOverBackColor = Color.Firebrick;
             excluirButton.FlatStyle = FlatStyle.Flat;
-            excluirButton.Font = new Font("Montserrat", 8.999999F);
+            excluirButton.Font = new Font("Montserrat", 12F);
             excluirButton.ForeColor = Color.White;
             excluirButton.Location = new Point(25, 6);
             excluirButton.Margin = new Padding(3, 4, 3, 4);
@@ -95,7 +96,7 @@
             cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
             cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
             cancelarButton.FlatStyle = FlatStyle.Flat;
-            cancelarButton.Font = new Font("Montserrat", 8.999999F);
+            cancelarButton.Font = new Font("Montserrat", 12F);
             cancelarButton.ForeColor = Color.White;
             cancelarButton.Location = new Point(1190, 6);
             cancelarButton.Margin = new Padding(3, 4, 3, 4);
@@ -116,7 +117,7 @@
             adicionarButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
             adicionarButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
             adicionarButton.FlatStyle = FlatStyle.Flat;
-            adicionarButton.Font = new Font("Montserrat", 8.999999F);
+            adicionarButton.Font = new Font("Montserrat", 12F);
             adicionarButton.ForeColor = Color.White;
             adicionarButton.Location = new Point(957, 6);
             adicionarButton.Margin = new Padding(3, 4, 3, 4);
@@ -137,7 +138,7 @@
             editarButton.FlatAppearance.MouseDownBackColor = Color.Goldenrod;
             editarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
             editarButton.FlatStyle = FlatStyle.Flat;
-            editarButton.Font = new Font("Montserrat", 8.999999F);
+            editarButton.Font = new Font("Montserrat", 12F);
             editarButton.ForeColor = Color.White;
             editarButton.Location = new Point(724, 6);
             editarButton.Margin = new Padding(3, 4, 3, 4);
@@ -158,7 +159,7 @@
             buscarButton.FlatAppearance.MouseDownBackColor = Color.DarkSlateGray;
             buscarButton.FlatAppearance.MouseOverBackColor = Color.Teal;
             buscarButton.FlatStyle = FlatStyle.Flat;
-            buscarButton.Font = new Font("Montserrat", 8.999999F);
+            buscarButton.Font = new Font("Montserrat", 12F);
             buscarButton.ForeColor = Color.White;
             buscarButton.Location = new Point(491, 6);
             buscarButton.Margin = new Padding(3, 4, 3, 4);
@@ -168,6 +169,7 @@
             buscarButton.TabIndex = 6;
             buscarButton.Text = "Buscar (F11)";
             buscarButton.UseVisualStyleBackColor = false;
+            buscarButton.Click += BuscarButton_Click;
             // 
             // metasDataGridView
             // 
@@ -195,18 +197,31 @@
             nenhumaMetaLabel.Text = "Não Existe Nenhuma Meta Cadastrada no Momento";
             nenhumaMetaLabel.Visible = false;
             // 
+            // buscarTextBox
+            // 
+            buscarTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            buscarTextBox.Location = new Point(1158, 775);
+            buscarTextBox.Name = "buscarTextBox";
+            buscarTextBox.PlaceholderText = "Digite para buscar...";
+            buscarTextBox.Size = new Size(215, 22);
+            buscarTextBox.TabIndex = 3;
+            buscarTextBox.Visible = false;
+            buscarTextBox.TextChanged += BuscarTextBox_TextChanged;
+            // 
             // FrmControleMeta
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 46, 61);
             ClientSize = new Size(1399, 875);
+            Controls.Add(buscarTextBox);
             Controls.Add(nenhumaMetaLabel);
             Controls.Add(metasDataGridView);
             Controls.Add(botoesTablePanel);
             Font = new Font("Montserrat", 8.999999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
             MinimumSize = new Size(1415, 914);
             Name = "FrmControleMeta";
             StartPosition = FormStartPosition.CenterScreen;
@@ -229,5 +244,6 @@
         private Button excluirButton;
         private Button editarButton;
         private Button buscarButton;
+        private TextBox buscarTextBox;
     }
 }
