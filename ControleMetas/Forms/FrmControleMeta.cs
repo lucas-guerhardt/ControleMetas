@@ -288,7 +288,7 @@ namespace ControleMetas.Forms
             else
             {
                 var metasFiltradas = metas
-                    .Where(m => m.Nome.ToLower().Contains(filtro) || m.Vendedor.ToLower().Contains(filtro))
+                    .Where(m => m.Nome.ToLower().Contains(filtro) || m.Id.ToLower().Contains(filtro) || m.Vendedor.ToLower().Contains(filtro) || m.Formato.ToString().ToLower().Contains(filtro) || m.Categoria.ToString().ToLower().Contains(filtro) || m.Periodicidade.ToString().ToLower().Contains(filtro) || m.Valor.ToString().Contains(filtro))
                     .ToList();
 
                 metasDataGridView.DataSource = new BindingList<MetaModel>(metasFiltradas);
