@@ -29,20 +29,147 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmControleMeta));
+            botoesTablePanel = new TableLayoutPanel();
+            excluirButton = new Button();
+            cancelarButton = new Button();
+            adicionarButton = new Button();
+            metasDataGridView = new DataGridView();
+            nenhumaMetaLabel = new Label();
+            botoesTablePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)metasDataGridView).BeginInit();
             SuspendLayout();
+            // 
+            // botoesTablePanel
+            // 
+            botoesTablePanel.ColumnCount = 6;
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.Controls.Add(excluirButton, 0, 0);
+            botoesTablePanel.Controls.Add(cancelarButton, 5, 0);
+            botoesTablePanel.Controls.Add(adicionarButton, 4, 0);
+            botoesTablePanel.Dock = DockStyle.Bottom;
+            botoesTablePanel.Location = new Point(0, 679);
+            botoesTablePanel.Name = "botoesTablePanel";
+            botoesTablePanel.RowCount = 1;
+            botoesTablePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            botoesTablePanel.Size = new Size(1224, 50);
+            botoesTablePanel.TabIndex = 0;
+            // 
+            // excluirButton
+            // 
+            excluirButton.Anchor = AnchorStyles.None;
+            excluirButton.BackColor = Color.Red;
+            excluirButton.Cursor = Cursors.Hand;
+            excluirButton.FlatAppearance.BorderColor = Color.White;
+            excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
+            excluirButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
+            excluirButton.FlatStyle = FlatStyle.Flat;
+            excluirButton.Font = new Font("Segoe UI", 12F);
+            excluirButton.ForeColor = Color.White;
+            excluirButton.Location = new Point(22, 5);
+            excluirButton.MinimumSize = new Size(160, 40);
+            excluirButton.Name = "excluirButton";
+            excluirButton.Size = new Size(160, 40);
+            excluirButton.TabIndex = 4;
+            excluirButton.Text = "Excluir (Del)";
+            excluirButton.UseVisualStyleBackColor = false;
+            excluirButton.Click += ExcluirButton_Click;
+            // 
+            // cancelarButton
+            // 
+            cancelarButton.Anchor = AnchorStyles.None;
+            cancelarButton.BackColor = Color.Transparent;
+            cancelarButton.CausesValidation = false;
+            cancelarButton.Cursor = Cursors.Hand;
+            cancelarButton.FlatAppearance.BorderColor = Color.White;
+            cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
+            cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
+            cancelarButton.FlatStyle = FlatStyle.Flat;
+            cancelarButton.Font = new Font("Segoe UI", 12F);
+            cancelarButton.ForeColor = Color.White;
+            cancelarButton.Location = new Point(1042, 5);
+            cancelarButton.MinimumSize = new Size(160, 40);
+            cancelarButton.Name = "cancelarButton";
+            cancelarButton.Size = new Size(160, 40);
+            cancelarButton.TabIndex = 2;
+            cancelarButton.Text = "< Voltar (Esc)";
+            cancelarButton.UseVisualStyleBackColor = false;
+            cancelarButton.Click += CancelarButton_Click;
+            // 
+            // adicionarButton
+            // 
+            adicionarButton.Anchor = AnchorStyles.None;
+            adicionarButton.BackColor = Color.Green;
+            adicionarButton.Cursor = Cursors.Hand;
+            adicionarButton.FlatAppearance.BorderColor = Color.White;
+            adicionarButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
+            adicionarButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
+            adicionarButton.FlatStyle = FlatStyle.Flat;
+            adicionarButton.Font = new Font("Segoe UI", 12F);
+            adicionarButton.ForeColor = Color.White;
+            adicionarButton.Location = new Point(838, 5);
+            adicionarButton.MinimumSize = new Size(160, 40);
+            adicionarButton.Name = "adicionarButton";
+            adicionarButton.Size = new Size(160, 40);
+            adicionarButton.TabIndex = 3;
+            adicionarButton.Text = "Adicionar [+] (F2)";
+            adicionarButton.UseVisualStyleBackColor = false;
+            adicionarButton.Click += AdicionarButton_Click;
+            // 
+            // metasDataGridView
+            // 
+            metasDataGridView.BackgroundColor = Color.FromArgb(33, 46, 61);
+            metasDataGridView.BorderStyle = BorderStyle.Fixed3D;
+            metasDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            metasDataGridView.Location = new Point(12, 12);
+            metasDataGridView.Name = "metasDataGridView";
+            metasDataGridView.Size = new Size(1200, 661);
+            metasDataGridView.TabIndex = 1;
+            metasDataGridView.CellContentClick += MetasDataGridView_CellContentClick;
+            // 
+            // nenhumaMetaLabel
+            // 
+            nenhumaMetaLabel.AutoSize = true;
+            nenhumaMetaLabel.Font = new Font("Segoe UI", 12F);
+            nenhumaMetaLabel.ForeColor = Color.Transparent;
+            nenhumaMetaLabel.Location = new Point(415, 310);
+            nenhumaMetaLabel.Name = "nenhumaMetaLabel";
+            nenhumaMetaLabel.Size = new Size(370, 21);
+            nenhumaMetaLabel.TabIndex = 2;
+            nenhumaMetaLabel.Text = "Não Existe Nenhuma Meta Cadastrada no Momento";
+            nenhumaMetaLabel.Visible = false;
             // 
             // FrmControleMeta
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 46, 61);
-            ClientSize = new Size(1136, 609);
+            ClientSize = new Size(1224, 729);
+            Controls.Add(nenhumaMetaLabel);
+            Controls.Add(metasDataGridView);
+            Controls.Add(botoesTablePanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FrmControleMeta";
             Text = "Controle das Metas";
+            Load += FrmControleMeta_Load;
+            KeyDown += FrmControleMeta_KeyDown;
+            botoesTablePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)metasDataGridView).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private TableLayoutPanel botoesTablePanel;
+        private DataGridView metasDataGridView;
+        private Button cancelarButton;
+        private Label nenhumaMetaLabel;
+        private Button adicionarButton;
+        private Button excluirButton;
     }
 }

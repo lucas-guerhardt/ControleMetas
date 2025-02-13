@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,23 +9,36 @@ using ControleMetas.Models.Enum;
 
 namespace ControleMetas.Models
 {
+    [Table("Metas")]
     public class MetaModel
     {
-        public string Id { get; set; } = string.Empty;
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        public string Nome { get; set; } = string.Empty;
+        [Required]
+        public string Nome { get; set; }
 
-        public string Vendedor { get; set; } = string.Empty;
+        [Required]
+        public string Vendedor { get; set; }
 
+        [Required]
         public FormatoMetaEnum Formato { get; set; }
 
+        [Required]
         public CategoriaMetaEnum Categoria { get; set; }
 
+        [Required]
         public PeriodicidadeMetaEnum Periodicidade { get; set; }
 
+        [Required]
         public decimal Valor { get; set; }
 
-        public MetaModel() { }
+        public MetaModel()
+        {
+            Nome = string.Empty;
+            Vendedor = string.Empty;
+        }
 
         public MetaModel(string nome, string vendedor, FormatoMetaEnum formato, CategoriaMetaEnum categoria, PeriodicidadeMetaEnum periodicidade, decimal valor)
         {

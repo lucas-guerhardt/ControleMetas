@@ -21,7 +21,7 @@ namespace ControleMetas.Forms
     {
         private VendedorController VendedorController = new();
 
-        private MetaController MetaController = new();
+        private MetaController MetaController = MetaController.Instance;
 
         public FrmCadastroMeta()
         {
@@ -33,6 +33,11 @@ namespace ControleMetas.Forms
             if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+
+            if(e.KeyCode == Keys.F2)
+            {
+                AdicionarButton_Click(sender, e);
             }
         }
 
@@ -100,11 +105,23 @@ namespace ControleMetas.Forms
 
                 MetaController.Create(novaMeta);
                 MessageBox.Show("Meta criada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PrintaMetas();
+
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Erro ao criar nova meta.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void PrintaMetas()
+        {
+            var metas = MetaController.Get();
+            Debug.WriteLine("Metas:");
+            foreach (var meta in metas)
+            {
+                Debug.WriteLine(meta.Nome);
             }
         }
 

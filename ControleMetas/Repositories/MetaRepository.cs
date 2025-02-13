@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,26 +8,27 @@ using ControleMetas.Models;
 
 namespace ControleMetas.Repositories
 {
-    public class MetaRepository
+    public class MetaRepository(AppDbContext context)
     {
-        private static List<MetaModel> _metas = [];
+        private readonly AppDbContext _context = context;
 
         public string Add(MetaModel meta)
         {
-            _metas.Add(meta);
+            _context.Add(meta);
+            _context.SaveChanges();
             return meta.Id;
         }
 
         public List<MetaModel> ListAll()
         {
-            return _metas;
+            return _context.Metas.ToList();
         }
 
         public MetaModel? FindById(string id)
         {
-            if (_metas.Count == 0) return null;
+            if (_context.Metas.Any()) return null;
 
-            return _metas.FirstOrDefault(m => m.Id == id);
+            return _context.Metas.FirstOrDefault(m => m.Id == id); ;
         }
 
         public string? Update(string id, MetaModel meta)
@@ -50,6 +52,8 @@ namespace ControleMetas.Repositories
             if (meta.Categoria != metaToUpdate.Categoria)
                 metaToUpdate.Categoria = meta.Categoria;
 
+            _context.SaveChanges();
+
             return metaToUpdate.Id;
         }
 
@@ -57,8 +61,10 @@ namespace ControleMetas.Repositories
         {
             var meta = FindById(id);
             if (meta == null) return null;
-            
-            _metas.Remove(meta);
+
+            _context.Metas.Remove(meta);
+            _context.SaveChanges();
+
             return meta.Id;
         }
     }
