@@ -13,6 +13,7 @@ using ControleMetas.Exceptions;
 using ControleMetas.Models;
 using ControleMetas.Models.Enum;
 using ControleMetas.Utils.Data;
+using ControleMetas.Utils.FontUtils;
 using ControleMetas.Utils.FormatUtils;
 
 namespace ControleMetas.Forms
@@ -26,6 +27,12 @@ namespace ControleMetas.Forms
         public FrmCadastroMeta()
         {
             InitializeComponent();
+
+            Font? montserratFont = FontUtils.LoadMontserrat(12);
+            if (montserratFont != null)
+            {
+                this.Font = montserratFont;
+            }
         }
 
         private void FrmCadastroMeta_KeyDown(object sender, KeyEventArgs e)

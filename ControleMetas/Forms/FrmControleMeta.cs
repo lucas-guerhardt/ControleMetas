@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using ControleMetas.Controllers;
 using ControleMetas.Models;
 using ControleMetas.Utils.Data;
+using ControleMetas.Utils.FontUtils;
 
 namespace ControleMetas.Forms
 {
@@ -25,6 +26,13 @@ namespace ControleMetas.Forms
         public FrmControleMeta()
         {
             InitializeComponent();
+
+            Font? montserratFont = FontUtils.LoadMontserrat(12);
+            if (montserratFont != null)
+            {
+                this.Font = montserratFont;
+            }
+
             metas = MetaController.Get();
             bindingList = new BindingList<MetaModel>(metas);
 
@@ -51,7 +59,10 @@ namespace ControleMetas.Forms
         {
             if (e.KeyCode == Keys.Escape)
             {
-                this.Close();
+                var confirmation = MessageBox.Show("Você Deseja Sair da Aplicação?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmation == DialogResult.Yes)
+                    this.Close();
             }
 
             if (e.KeyCode == Keys.F2)

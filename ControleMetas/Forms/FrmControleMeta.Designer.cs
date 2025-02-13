@@ -56,11 +56,12 @@
             botoesTablePanel.Controls.Add(editarButton, 3, 0);
             botoesTablePanel.Controls.Add(buscarButton, 2, 0);
             botoesTablePanel.Dock = DockStyle.Bottom;
-            botoesTablePanel.Location = new Point(0, 679);
+            botoesTablePanel.Location = new Point(0, 815);
+            botoesTablePanel.Margin = new Padding(3, 4, 3, 4);
             botoesTablePanel.Name = "botoesTablePanel";
             botoesTablePanel.RowCount = 1;
             botoesTablePanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            botoesTablePanel.Size = new Size(1224, 50);
+            botoesTablePanel.Size = new Size(1399, 60);
             botoesTablePanel.TabIndex = 0;
             // 
             // excluirButton
@@ -72,12 +73,13 @@
             excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkRed;
             excluirButton.FlatAppearance.MouseOverBackColor = Color.Firebrick;
             excluirButton.FlatStyle = FlatStyle.Flat;
-            excluirButton.Font = new Font("Segoe UI", 12F);
+            excluirButton.Font = new Font("Montserrat", 8.999999F);
             excluirButton.ForeColor = Color.White;
-            excluirButton.Location = new Point(22, 5);
-            excluirButton.MinimumSize = new Size(160, 40);
+            excluirButton.Location = new Point(25, 6);
+            excluirButton.Margin = new Padding(3, 4, 3, 4);
+            excluirButton.MinimumSize = new Size(183, 48);
             excluirButton.Name = "excluirButton";
-            excluirButton.Size = new Size(160, 40);
+            excluirButton.Size = new Size(183, 48);
             excluirButton.TabIndex = 4;
             excluirButton.Text = "Excluir (Del)";
             excluirButton.UseVisualStyleBackColor = false;
@@ -93,12 +95,13 @@
             cancelarButton.FlatAppearance.MouseDownBackColor = Color.LightGray;
             cancelarButton.FlatAppearance.MouseOverBackColor = Color.LightGray;
             cancelarButton.FlatStyle = FlatStyle.Flat;
-            cancelarButton.Font = new Font("Segoe UI", 12F);
+            cancelarButton.Font = new Font("Montserrat", 8.999999F);
             cancelarButton.ForeColor = Color.White;
-            cancelarButton.Location = new Point(1042, 5);
-            cancelarButton.MinimumSize = new Size(160, 40);
+            cancelarButton.Location = new Point(1190, 6);
+            cancelarButton.Margin = new Padding(3, 4, 3, 4);
+            cancelarButton.MinimumSize = new Size(183, 48);
             cancelarButton.Name = "cancelarButton";
-            cancelarButton.Size = new Size(160, 40);
+            cancelarButton.Size = new Size(183, 48);
             cancelarButton.TabIndex = 2;
             cancelarButton.Text = "< Voltar (Esc)";
             cancelarButton.UseVisualStyleBackColor = false;
@@ -113,12 +116,13 @@
             adicionarButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
             adicionarButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
             adicionarButton.FlatStyle = FlatStyle.Flat;
-            adicionarButton.Font = new Font("Segoe UI", 12F);
+            adicionarButton.Font = new Font("Montserrat", 8.999999F);
             adicionarButton.ForeColor = Color.White;
-            adicionarButton.Location = new Point(838, 5);
-            adicionarButton.MinimumSize = new Size(160, 40);
+            adicionarButton.Location = new Point(957, 6);
+            adicionarButton.Margin = new Padding(3, 4, 3, 4);
+            adicionarButton.MinimumSize = new Size(183, 48);
             adicionarButton.Name = "adicionarButton";
-            adicionarButton.Size = new Size(160, 40);
+            adicionarButton.Size = new Size(183, 48);
             adicionarButton.TabIndex = 3;
             adicionarButton.Text = "Adicionar [+] (F2)";
             adicionarButton.UseVisualStyleBackColor = false;
@@ -133,12 +137,13 @@
             editarButton.FlatAppearance.MouseDownBackColor = Color.Goldenrod;
             editarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
             editarButton.FlatStyle = FlatStyle.Flat;
-            editarButton.Font = new Font("Segoe UI", 12F);
+            editarButton.Font = new Font("Montserrat", 8.999999F);
             editarButton.ForeColor = Color.White;
-            editarButton.Location = new Point(634, 5);
-            editarButton.MinimumSize = new Size(160, 40);
+            editarButton.Location = new Point(724, 6);
+            editarButton.Margin = new Padding(3, 4, 3, 4);
+            editarButton.MinimumSize = new Size(183, 48);
             editarButton.Name = "editarButton";
-            editarButton.Size = new Size(160, 40);
+            editarButton.Size = new Size(183, 48);
             editarButton.TabIndex = 5;
             editarButton.Text = "Editar (F3)";
             editarButton.UseVisualStyleBackColor = false;
@@ -153,12 +158,13 @@
             buscarButton.FlatAppearance.MouseDownBackColor = Color.DarkSlateGray;
             buscarButton.FlatAppearance.MouseOverBackColor = Color.Teal;
             buscarButton.FlatStyle = FlatStyle.Flat;
-            buscarButton.Font = new Font("Segoe UI", 12F);
+            buscarButton.Font = new Font("Montserrat", 8.999999F);
             buscarButton.ForeColor = Color.White;
-            buscarButton.Location = new Point(430, 5);
-            buscarButton.MinimumSize = new Size(160, 40);
+            buscarButton.Location = new Point(491, 6);
+            buscarButton.Margin = new Padding(3, 4, 3, 4);
+            buscarButton.MinimumSize = new Size(183, 48);
             buscarButton.Name = "buscarButton";
-            buscarButton.Size = new Size(160, 40);
+            buscarButton.Size = new Size(183, 48);
             buscarButton.TabIndex = 6;
             buscarButton.Text = "Buscar (F11)";
             buscarButton.UseVisualStyleBackColor = false;
@@ -168,37 +174,40 @@
             metasDataGridView.BackgroundColor = Color.FromArgb(33, 46, 61);
             metasDataGridView.BorderStyle = BorderStyle.Fixed3D;
             metasDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            metasDataGridView.Location = new Point(12, 12);
+            metasDataGridView.Location = new Point(14, 14);
+            metasDataGridView.Margin = new Padding(3, 4, 3, 4);
             metasDataGridView.Name = "metasDataGridView";
-            metasDataGridView.Size = new Size(1200, 661);
+            metasDataGridView.Size = new Size(1371, 793);
             metasDataGridView.TabIndex = 1;
             metasDataGridView.CellContentClick += MetasDataGridView_CellContentClick;
-            metasDataGridView.CellFormatting += MetasDataGridView_CellFormatting;
             metasDataGridView.CellDoubleClick += MetasDataGridView_CellDoubleClick;
+            metasDataGridView.CellFormatting += MetasDataGridView_CellFormatting;
             // 
             // nenhumaMetaLabel
             // 
             nenhumaMetaLabel.AutoSize = true;
-            nenhumaMetaLabel.Font = new Font("Segoe UI", 12F);
+            nenhumaMetaLabel.Font = new Font("Montserrat", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             nenhumaMetaLabel.ForeColor = Color.Transparent;
-            nenhumaMetaLabel.Location = new Point(415, 310);
+            nenhumaMetaLabel.Location = new Point(474, 372);
             nenhumaMetaLabel.Name = "nenhumaMetaLabel";
-            nenhumaMetaLabel.Size = new Size(370, 21);
+            nenhumaMetaLabel.Size = new Size(426, 25);
             nenhumaMetaLabel.TabIndex = 2;
             nenhumaMetaLabel.Text = "Não Existe Nenhuma Meta Cadastrada no Momento";
             nenhumaMetaLabel.Visible = false;
             // 
             // FrmControleMeta
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 18F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 46, 61);
-            ClientSize = new Size(1224, 729);
+            ClientSize = new Size(1399, 875);
             Controls.Add(nenhumaMetaLabel);
             Controls.Add(metasDataGridView);
             Controls.Add(botoesTablePanel);
+            Font = new Font("Montserrat", 8.999999F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(1240, 768);
+            Margin = new Padding(3, 4, 3, 4);
+            MinimumSize = new Size(1415, 914);
             Name = "FrmControleMeta";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Controle das Metas";

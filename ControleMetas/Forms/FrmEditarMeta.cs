@@ -13,6 +13,7 @@ using ControleMetas.Exceptions;
 using ControleMetas.Models;
 using ControleMetas.Models.Enum;
 using ControleMetas.Utils.Data;
+using ControleMetas.Utils.FontUtils;
 using ControleMetas.Utils.FormatUtils;
 
 namespace ControleMetas.Forms
@@ -26,6 +27,12 @@ namespace ControleMetas.Forms
         public FrmEditarMeta(MetaModel meta)
         {
             InitializeComponent();
+
+            Font? montserratFont = FontUtils.LoadMontserrat(12);
+            if (montserratFont != null)
+            {
+                this.Font = montserratFont;
+            }
 
             idValueLabel.Text = meta.Id;
             nomeTextBox.Text = meta.Nome;
@@ -211,6 +218,10 @@ namespace ControleMetas.Forms
 
         private void CancelarButton_Click(object sender, EventArgs e)
         {
+            var confirmacao = MessageBox.Show("Existem dados e informações não salvas. Deseja realmente sair?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmacao == DialogResult.No) return;
+
             this.Close();
         }
 
