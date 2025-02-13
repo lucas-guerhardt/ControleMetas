@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ControleMetas.Controllers;
 using ControleMetas.Models;
+using ControleMetas.Utils.Data;
 
 namespace ControleMetas.Forms
 {
     public partial class FrmControleMeta : Form
     {
-        private MetaController MetaController = MetaController.Instance;
+        private readonly MetaController MetaController = MetaController.Instance;
 
         List<MetaModel> metas;
 
@@ -31,6 +32,7 @@ namespace ControleMetas.Forms
 
         private void FrmControleMeta_Load(object sender, EventArgs e)
         {
+            Data.GerarVendedores();
             CarregarMetas();
             this.KeyPreview = true;
             nenhumaMetaLabel.Left = (metasDataGridView.Width - nenhumaMetaLabel.Width) / 2;
@@ -42,6 +44,7 @@ namespace ControleMetas.Forms
             metasDataGridView.DataSource = bindingList;
             metasDataGridView.ReadOnly = true;
             metasDataGridView.AllowUserToAddRows = false;
+            metasDataGridView.Columns.Cast<DataGridViewColumn>().ToList().ForEach(col => col.SortMode = DataGridViewColumnSortMode.NotSortable);
         }
 
         private void FrmControleMeta_KeyDown(object sender, KeyEventArgs e)
@@ -51,7 +54,7 @@ namespace ControleMetas.Forms
                 this.Close();
             }
 
-            if(e.KeyCode == Keys.F2)
+            if (e.KeyCode == Keys.F2)
             {
                 AdicionarButton_Click(sender, e);
             }
@@ -59,6 +62,11 @@ namespace ControleMetas.Forms
             if (e.KeyCode == Keys.Delete)
             {
                 ExcluirButton_Click(sender, e);
+            }
+
+            if(e.KeyCode == Keys.F3)
+            {
+                EditarButton_Click(sender, e);
             }
         }
 
@@ -78,14 +86,14 @@ namespace ControleMetas.Forms
             nenhumaMetaLabel.Visible = false;
 
             metasDataGridView.Visible = true;
-            
+
         }
 
         private void MetasDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if(e.RowIndex%2 == 0)
+            if (e.RowIndex % 2 == 0)
             {
-                metasDataGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(202,215,229);
+                metasDataGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(202, 215, 229);
             }
 
             if (metasDataGridView.Columns[e.ColumnIndex].Name == "Valor")
@@ -103,7 +111,10 @@ namespace ControleMetas.Forms
                             e.Value = $"{valor:F2} Litros";
                             break;
                         case "Unidades":
-                            e.Value = $"{valor:F0} Unidades";
+                            e.Value = $"{valor:F2} Unidades";
+                            break;
+                        default:
+                            e.Value = valor;
                             break;
                     }
 
@@ -111,6 +122,8 @@ namespace ControleMetas.Forms
                 }
             }
         }
+
+        private BindingSource bindingSource = new BindingSource();
 
         private void AtualizaMetas()
         {
@@ -126,16 +139,12 @@ namespace ControleMetas.Forms
             nenhumaMetaLabel.Visible = false;
             metasDataGridView.Visible = true;
 
-            if (bindingList.Count > 0)
-                bindingList.Clear();
-              
-            foreach (var meta in metas)
-            {
-                bindingList.Add(meta);
-            }
+            bindingSource.DataSource = metas;
 
-            metasDataGridView.Visible = true;
+            metasDataGridView.DataSource = bindingSource;
+            metasDataGridView.Refresh();
         }
+
 
         private void CancelarButton_Click(object sender, EventArgs e)
         {
@@ -149,13 +158,24 @@ namespace ControleMetas.Forms
                 var selected = metasDataGridView.SelectedRows;
                 if (selected.Count == 0) throw new Exception("Nenhuma meta selecionada.");
 
+                string mensagem = selected.Count > 1 ? $"{selected.Count} Metas" : $"{selected.Count} Meta";
+
+                var confirmacao = MessageBox.Show($"Deseja realmente excluir as metas selecionadas? ({mensagem})", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmacao == DialogResult.No) return;
+
                 foreach (DataGridViewRow row in selected)
                 {
                     string? metaId = row.Cells["Id"].Value.ToString();
 
                     if (metaId == null) continue;
 
-                    MetaController.Delete(metaId);
+                    var sucesso = MetaController.Delete(metaId);
+
+                    if (sucesso == null)
+                    {
+                        MessageBox.Show($"Erro ao excluir meta com ID {metaId}.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
 
                 AtualizaMetas();
@@ -171,6 +191,47 @@ namespace ControleMetas.Forms
             FrmCadastroMeta frmCadastroMeta = new();
             frmCadastroMeta.ShowDialog();
             AtualizaMetas();
+        }
+
+        private void EditarButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var selected = metasDataGridView.SelectedRows;
+
+                if (metasDataGridView.SelectedRows.Count != 1)
+                {
+                    MessageBox.Show("Selecione exatamente uma meta para editar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var selectedRow = metasDataGridView.SelectedRows[0];
+                string? id = selectedRow.Cells["Id"].Value as string;
+
+                if (string.IsNullOrWhiteSpace(id))
+                {
+                    MessageBox.Show("Meta inválida para edição.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var meta = MetaController.Get(id);
+                if (meta == null)
+                {
+                    MessageBox.Show($"Meta com ID {id} não encontrada.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                using (FrmEditarMeta frmEditarMeta = new(meta))
+                {
+                    frmEditarMeta.ShowDialog();
+                }
+
+                AtualizaMetas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro ao Editar Meta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

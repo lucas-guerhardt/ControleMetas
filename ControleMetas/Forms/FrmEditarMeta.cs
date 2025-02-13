@@ -17,104 +17,118 @@ using ControleMetas.Utils.FormatUtils;
 
 namespace ControleMetas.Forms
 {
-    public partial class FrmCadastroMeta : Form
+    public partial class FrmEditarMeta : Form
     {
         private readonly VendedorController VendedorController = new();
 
         private readonly MetaController MetaController = MetaController.Instance;
 
-        public FrmCadastroMeta()
+        public FrmEditarMeta(MetaModel meta)
         {
             InitializeComponent();
+
+            idValueLabel.Text = meta.Id;
+            nomeTextBox.Text = meta.Nome;
+
+            vendedorComboBox.DataSource = VendedorController.Get();
+            vendedorComboBox.DisplayMember = "Nome";
+            vendedorComboBox.SelectedItem = vendedorComboBox.Items.Cast<VendedorModel>().FirstOrDefault(v => v.Nome == meta.Vendedor);
+
+            formatoComboBox.DataSource = Enum.GetValues(typeof(FormatoMetaEnum));
+            formatoComboBox.SelectedItem = meta.Formato;
+
+            categoriaComboBox.DataSource = Enum.GetValues(typeof(CategoriaMetaEnum));
+            categoriaComboBox.SelectedItem = meta.Categoria;
+
+            periodicidadeComboBox.DataSource = Enum.GetValues(typeof(PeriodicidadeMetaEnum));
+            periodicidadeComboBox.SelectedItem = meta.Periodicidade;
+
+            valorTextBox.Text = $"{meta.Valor:N2} {ObterUnidade(meta.Formato)}";
+
+            errorLabel.Location = new Point(errorLabel.Location.X, errorLabel.Location.Y + 15);
+        }
+        private static string ObterUnidade(FormatoMetaEnum formato)
+        {
+            return formato switch
+            {
+                FormatoMetaEnum.Monetario => "R$",
+                FormatoMetaEnum.Litros => "L",
+                FormatoMetaEnum.Unidades => "UN",
+                _ => ""
+            };
         }
 
-        private void FrmCadastroMeta_KeyDown(object sender, KeyEventArgs e)
+        private void FrmEditarMeta_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
             }
 
-            if(e.KeyCode == Keys.F2)
+            if (e.KeyCode == Keys.F2)
             {
-                AdicionarButton_Click(sender, e);
+                SalvarButton_Click(sender, e);
+            }
+
+            if (e.KeyCode == Keys.Delete)
+            {
+                ExcluirButton_Click(sender, e);
             }
         }
 
-        private void FrmCadastroMeta_Load(object sender, EventArgs e)
+        private void FrmEditarMeta_Load(object sender, EventArgs e)
         {
-            var listaVendedores = VendedorController.Get();
-
-            formatoComboBox.DataSource = Enum.GetValues(typeof(FormatoMetaEnum));
-
-            periodicidadeComboBox.DataSource = Enum.GetValues(typeof(PeriodicidadeMetaEnum));
-
-            vendedorComboBox.DataSource = listaVendedores;
-            vendedorComboBox.DisplayMember = "Nome";
+            this.KeyPreview = true;
         }
 
-        private void CadastroTableLayoutPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void NomeLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void NomeMetaTextBox_TextChanged(object sender, EventArgs e)
+        private void NomeTextBox_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                if (string.IsNullOrEmpty(nomeMetaTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
-                nomeMetaTextBox.BackColor = Color.White;
+                if (string.IsNullOrEmpty(nomeTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
+                nomeTextBox.BackColor = Color.White;
             }
             catch (BusinessException ex)
             {
-                nomeMetaTextBox.BackColor = Color.FromArgb(252, 199, 194);
+                nomeTextBox.BackColor = Color.FromArgb(252, 199, 194);
                 FormatUtils.FormatarErroLabel(errorLabel, ex.Message);
             }
         }
 
-        private void AdicionarButton_Click(object sender, EventArgs e)
+        private void SalvarButton_Click(object sender, EventArgs e)
         {
             try
             {
-                if(string.IsNullOrEmpty(nomeMetaTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
+                if (string.IsNullOrEmpty(nomeTextBox.Text)) throw new BusinessException("O nome não deve ser nulo.");
 
                 if (string.IsNullOrEmpty(valorTextBox.Text)) throw new BusinessException("O valor não deve ser nulo.");
 
-                var novaMeta = new MetaModel
+                var id = idValueLabel.Text;
+
+                var metaAtualizada = new MetaModel
                 {
-                    Nome = nomeMetaTextBox.Text,
+                    Nome = nomeTextBox.Text,
                     Vendedor = vendedorComboBox.Text,
                     Formato = (FormatoMetaEnum)Enum.Parse(typeof(FormatoMetaEnum), formatoComboBox.Text),
                     Categoria = (CategoriaMetaEnum)Enum.Parse(typeof(CategoriaMetaEnum), categoriaComboBox.Text),
                     Periodicidade = (PeriodicidadeMetaEnum)Enum.Parse(typeof(PeriodicidadeMetaEnum), periodicidadeComboBox.Text),
-                    Valor = decimal.Parse(new string(valorTextBox.Text.Where(c => char.IsDigit(c)).ToArray()))
+                    Valor = decimal.Parse(new string(valorTextBox.Text.Where(c => char.IsDigit(c)).ToArray()))/100
                 };
 
-                if (novaMeta.Valor <= 0) throw new BusinessException("O valor deve ser maior que zero.");
+                if (metaAtualizada.Valor <= 0) throw new BusinessException("O valor deve ser maior que zero.");
 
-                if (!char.IsLetter(novaMeta.Nome[0])) throw new BusinessException("O nome deve começar com uma letra.");
+                if (!char.IsLetter(metaAtualizada.Nome[0])) throw new BusinessException("O nome deve começar com uma letra.");
 
+                MetaController.Update(id, metaAtualizada);
 
-
-                MetaController.Create(novaMeta);
-                MessageBox.Show("Meta criada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Meta atualizada com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Erro ao criar nova meta.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Erro ao atualizar a meta.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void BotoesTableLayoutPanel_Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
         private void ValorTextBox_TextChanged(object sender, EventArgs e)
@@ -147,7 +161,7 @@ namespace ControleMetas.Forms
 
         private void ValorTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char) Keys.Back)
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
             {
                 e.Handled = true;
             }
@@ -173,7 +187,6 @@ namespace ControleMetas.Forms
                 MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void ValorTextBox_Leave(object sender, EventArgs e)
         {
@@ -201,16 +214,6 @@ namespace ControleMetas.Forms
             this.Close();
         }
 
-        private void CategoriaLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PeriodicidadeComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void FormatoComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string? formatoSelecionado = formatoComboBox.GetItemText(formatoComboBox.SelectedItem);
@@ -218,7 +221,7 @@ namespace ControleMetas.Forms
             if (formatoSelecionado == "Litros")
             {
                 categoriaComboBox.DataSource = Enum.GetValues(typeof(CategoriaMetaEnum)).Cast<CategoriaMetaEnum>().Where(c => c == CategoriaMetaEnum.Barris || c == CategoriaMetaEnum.Garrafas).ToList();
-                valorTextBox.Text = "0,00 L";
+                valorTextBox.Text = $"{valorTextBox.Text} L";
             }
             else
             {
@@ -227,13 +230,34 @@ namespace ControleMetas.Forms
 
             if (formatoSelecionado == "Monetario")
             {
-                valorTextBox.Text = "R$ 0,00";
+                valorTextBox.Text = $"R$ {valorTextBox.Text}";
             }
             else
             {
-                valorTextBox.Text = "0,00 UN";
+                valorTextBox.Text = $"{valorTextBox.Text} UN";
             }
         }
 
+        private void ExcluirButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var id = idValueLabel.Text;
+                var meta = MetaController.Get(id) ?? throw new Exception("Meta não encontrada.");
+
+                var confirmacao = MessageBox.Show($"Deseja realmente excluir a meta {meta.Nome}?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (confirmacao == DialogResult.No) return;
+
+                MetaController.Delete(id);
+
+                MessageBox.Show("Meta excluída com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro ao Excluir Meta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

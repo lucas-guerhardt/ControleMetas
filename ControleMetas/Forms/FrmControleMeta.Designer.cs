@@ -142,6 +142,7 @@
             editarButton.TabIndex = 5;
             editarButton.Text = "Editar (F3)";
             editarButton.UseVisualStyleBackColor = false;
+            editarButton.Click += EditarButton_Click;
             // 
             // buscarButton
             // 

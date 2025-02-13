@@ -43,6 +43,9 @@ namespace ControleMetas.Repositories
             if(meta.Nome != metaToUpdate.Nome)
                 metaToUpdate.Nome = meta.Nome;
 
+            if(meta.Formato != metaToUpdate.Formato)
+                metaToUpdate.Formato = meta.Formato;
+
             if (meta.Vendedor != metaToUpdate.Vendedor)
                 metaToUpdate.Vendedor = meta.Vendedor;
 

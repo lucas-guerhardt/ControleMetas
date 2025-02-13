@@ -203,9 +203,9 @@
             valorTextBox.Size = new Size(229, 23);
             valorTextBox.TabIndex = 10;
             valorTextBox.TextChanged += ValorTextBox_TextChanged;
-            valorTextBox.Leave += ValorTextBox_Leave;
-            valorTextBox.KeyPress += ValorTextBox_KeyPress;
             valorTextBox.Enter += ValorTextBox_Enter;
+            valorTextBox.KeyPress += ValorTextBox_KeyPress;
+            valorTextBox.Leave += ValorTextBox_Leave;
             // 
             // periodicidadeLabel
             // 
