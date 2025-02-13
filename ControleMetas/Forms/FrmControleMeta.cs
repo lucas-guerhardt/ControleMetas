@@ -75,6 +75,17 @@ namespace ControleMetas.Forms
 
         }
 
+        private void MetasDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                metasDataGridView.ClearSelection();
+                metasDataGridView.Rows[e.RowIndex].Selected = true;
+
+                EditarButton_Click(sender, e);
+            }
+        }
+
         private void CarregarMetas()
         {
             if (metas == null || metas.Count == 0)
@@ -156,6 +167,7 @@ namespace ControleMetas.Forms
             try
             {
                 var selected = metasDataGridView.SelectedRows;
+
                 if (selected.Count == 0) throw new Exception("Nenhuma meta selecionada.");
 
                 string mensagem = selected.Count > 1 ? $"{selected.Count} Metas" : $"{selected.Count} Meta";

@@ -174,6 +174,7 @@
             metasDataGridView.TabIndex = 1;
             metasDataGridView.CellContentClick += MetasDataGridView_CellContentClick;
             metasDataGridView.CellFormatting += MetasDataGridView_CellFormatting;
+            metasDataGridView.CellDoubleClick += MetasDataGridView_CellDoubleClick;
             // 
             // nenhumaMetaLabel
             // 
