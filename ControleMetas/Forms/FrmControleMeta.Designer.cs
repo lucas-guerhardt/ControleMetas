@@ -33,6 +33,8 @@
             excluirButton = new Button();
             cancelarButton = new Button();
             adicionarButton = new Button();
+            editarButton = new Button();
+            buscarButton = new Button();
             metasDataGridView = new DataGridView();
             nenhumaMetaLabel = new Label();
             botoesTablePanel.SuspendLayout();
@@ -51,6 +53,8 @@
             botoesTablePanel.Controls.Add(excluirButton, 0, 0);
             botoesTablePanel.Controls.Add(cancelarButton, 5, 0);
             botoesTablePanel.Controls.Add(adicionarButton, 4, 0);
+            botoesTablePanel.Controls.Add(editarButton, 3, 0);
+            botoesTablePanel.Controls.Add(buscarButton, 2, 0);
             botoesTablePanel.Dock = DockStyle.Bottom;
             botoesTablePanel.Location = new Point(0, 679);
             botoesTablePanel.Name = "botoesTablePanel";
@@ -120,6 +124,44 @@
             adicionarButton.UseVisualStyleBackColor = false;
             adicionarButton.Click += AdicionarButton_Click;
             // 
+            // editarButton
+            // 
+            editarButton.Anchor = AnchorStyles.None;
+            editarButton.BackColor = Color.DarkGoldenrod;
+            editarButton.Cursor = Cursors.Hand;
+            editarButton.FlatAppearance.BorderColor = Color.White;
+            editarButton.FlatAppearance.MouseDownBackColor = Color.Goldenrod;
+            editarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
+            editarButton.FlatStyle = FlatStyle.Flat;
+            editarButton.Font = new Font("Segoe UI", 12F);
+            editarButton.ForeColor = Color.White;
+            editarButton.Location = new Point(634, 5);
+            editarButton.MinimumSize = new Size(160, 40);
+            editarButton.Name = "editarButton";
+            editarButton.Size = new Size(160, 40);
+            editarButton.TabIndex = 5;
+            editarButton.Text = "Editar (F3)";
+            editarButton.UseVisualStyleBackColor = false;
+            // 
+            // buscarButton
+            // 
+            buscarButton.Anchor = AnchorStyles.None;
+            buscarButton.BackColor = Color.DarkCyan;
+            buscarButton.Cursor = Cursors.Hand;
+            buscarButton.FlatAppearance.BorderColor = Color.White;
+            buscarButton.FlatAppearance.MouseDownBackColor = Color.DarkSlateGray;
+            buscarButton.FlatAppearance.MouseOverBackColor = Color.Teal;
+            buscarButton.FlatStyle = FlatStyle.Flat;
+            buscarButton.Font = new Font("Segoe UI", 12F);
+            buscarButton.ForeColor = Color.White;
+            buscarButton.Location = new Point(430, 5);
+            buscarButton.MinimumSize = new Size(160, 40);
+            buscarButton.Name = "buscarButton";
+            buscarButton.Size = new Size(160, 40);
+            buscarButton.TabIndex = 6;
+            buscarButton.Text = "Buscar (F11)";
+            buscarButton.UseVisualStyleBackColor = false;
+            // 
             // metasDataGridView
             // 
             metasDataGridView.BackgroundColor = Color.FromArgb(33, 46, 61);
@@ -174,5 +216,7 @@
         private Label nenhumaMetaLabel;
         private Button adicionarButton;
         private Button excluirButton;
+        private Button editarButton;
+        private Button buscarButton;
     }
 }

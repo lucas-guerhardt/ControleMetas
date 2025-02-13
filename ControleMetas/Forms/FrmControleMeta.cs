@@ -83,6 +83,11 @@ namespace ControleMetas.Forms
 
         private void MetasDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
+            if(e.RowIndex%2 == 0)
+            {
+                metasDataGridView.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.FromArgb(202,215,229);
+            }
+
             if (metasDataGridView.Columns[e.ColumnIndex].Name == "Valor")
             {
                 var formato = metasDataGridView.Rows[e.RowIndex].Cells["Formato"].Value?.ToString();
