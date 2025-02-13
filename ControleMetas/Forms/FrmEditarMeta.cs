@@ -52,7 +52,7 @@ namespace ControleMetas.Forms
 
             valorTextBox.Text = $"{meta.Valor:N2} {ObterUnidade(meta.Formato)}";
 
-            errorLabel.Location = new Point(errorLabel.Location.X, errorLabel.Location.Y + 15);
+            errorLabel.Location = new Point(errorLabel.Location.X, errorLabel.Location.Y + 20);
         }
         private static string ObterUnidade(FormatoMetaEnum formato)
         {
