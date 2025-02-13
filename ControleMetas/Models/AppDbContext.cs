@@ -23,8 +23,6 @@ namespace ControleMetas.Models
 
             string connectionString = $"server=localhost;port={port};user={user};password={password};database=controle_metas";
 
-            Debug.WriteLine(connectionString);
-
             optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8,0,40)));
         }
 

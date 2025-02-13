@@ -20,7 +20,6 @@ namespace ControleMetas.Controllers
         //Construtor Privado para Arquitetura Singleton
         private MetaController() 
         {
-            Debug.WriteLine("Instância de MetaController criada.");
             var dbContext = new AppDbContext();
             _metaRepository = new MetaRepository(dbContext);
         }
@@ -63,6 +62,7 @@ namespace ControleMetas.Controllers
             if (meta == null) throw new BusinessException("A meta não pode ser nula.");
 
             meta.Nome = FormatUtils.FormatarNome(meta.Nome);
+            meta.Valor = meta.Valor / 100;
 
             return _metaRepository.Add(meta);
         }

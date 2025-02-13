@@ -1,10 +1,13 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ControleMetas.Exceptions;
 using ControleMetas.Models;
+using Microsoft.EntityFrameworkCore.Storage.Json;
 
 namespace ControleMetas.Repositories
 {
@@ -26,9 +29,9 @@ namespace ControleMetas.Repositories
 
         public MetaModel? FindById(string id)
         {
-            if (_context.Metas.Any()) return null;
+            if (!_context.Metas.Any()) return null;
 
-            return _context.Metas.FirstOrDefault(m => m.Id == id); ;
+            return _context.Metas.FirstOrDefault(m => m.Id.Trim() == id.Trim());
         }
 
         public string? Update(string id, MetaModel meta)
@@ -60,7 +63,8 @@ namespace ControleMetas.Repositories
         public string? Remove(string id)
         {
             var meta = FindById(id);
-            if (meta == null) return null;
+
+            if (meta == null) throw new NotFoundException($"A meta com id: {id} não foi encontrada");
 
             _context.Metas.Remove(meta);
             _context.SaveChanges();

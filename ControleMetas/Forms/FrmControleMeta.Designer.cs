@@ -65,8 +65,8 @@
             excluirButton.BackColor = Color.Red;
             excluirButton.Cursor = Cursors.Hand;
             excluirButton.FlatAppearance.BorderColor = Color.White;
-            excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkGreen;
-            excluirButton.FlatAppearance.MouseOverBackColor = Color.LimeGreen;
+            excluirButton.FlatAppearance.MouseDownBackColor = Color.DarkRed;
+            excluirButton.FlatAppearance.MouseOverBackColor = Color.Firebrick;
             excluirButton.FlatStyle = FlatStyle.Flat;
             excluirButton.Font = new Font("Segoe UI", 12F);
             excluirButton.ForeColor = Color.White;
@@ -130,6 +130,7 @@
             metasDataGridView.Size = new Size(1200, 661);
             metasDataGridView.TabIndex = 1;
             metasDataGridView.CellContentClick += MetasDataGridView_CellContentClick;
+            metasDataGridView.CellFormatting += MetasDataGridView_CellFormatting;
             // 
             // nenhumaMetaLabel
             // 
@@ -153,7 +154,9 @@
             Controls.Add(metasDataGridView);
             Controls.Add(botoesTablePanel);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MinimumSize = new Size(1240, 768);
             Name = "FrmControleMeta";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Controle das Metas";
             Load += FrmControleMeta_Load;
             KeyDown += FrmControleMeta_KeyDown;
