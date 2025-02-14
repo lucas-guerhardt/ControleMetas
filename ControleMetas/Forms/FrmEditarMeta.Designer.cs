@@ -85,12 +85,12 @@
             // 
             salvarButton.BackColor = Color.DarkGoldenrod;
             salvarButton.Cursor = Cursors.Hand;
-            salvarButton.FlatAppearance.BorderColor = Color.White;
+            salvarButton.FlatAppearance.BorderColor = Color.Black;
             salvarButton.FlatAppearance.MouseDownBackColor = Color.DarkOrange;
             salvarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
             salvarButton.FlatStyle = FlatStyle.Flat;
             salvarButton.Font = new Font("Montserrat", 12F);
-            salvarButton.ForeColor = Color.White;
+            salvarButton.ForeColor = Color.Black;
             salvarButton.Location = new Point(295, 4);
             salvarButton.Margin = new Padding(3, 4, 3, 4);
             salvarButton.MinimumSize = new Size(131, 38);

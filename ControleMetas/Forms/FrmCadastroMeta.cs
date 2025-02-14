@@ -58,11 +58,21 @@ namespace ControleMetas.Forms
 
             vendedorComboBox.DataSource = listaVendedores;
             vendedorComboBox.DisplayMember = "Nome";
+
+            formatoComboBox.MouseWheel += ComboBox_MouseWheel;
+            categoriaComboBox.MouseWheel += ComboBox_MouseWheel;
+            vendedorComboBox.MouseWheel += ComboBox_MouseWheel;
+            periodicidadeComboBox.MouseWheel += ComboBox_MouseWheel;
         }
 
         private void CadastroTableLayoutPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void ComboBox_MouseWheel(object? sender, MouseEventArgs e)
+        {
+            ((HandledMouseEventArgs)e).Handled = true;
         }
 
         private void NomeLabel_Click(object sender, EventArgs e)

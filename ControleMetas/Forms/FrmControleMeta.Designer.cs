@@ -134,12 +134,12 @@
             editarButton.Anchor = AnchorStyles.None;
             editarButton.BackColor = Color.DarkGoldenrod;
             editarButton.Cursor = Cursors.Hand;
-            editarButton.FlatAppearance.BorderColor = Color.White;
+            editarButton.FlatAppearance.BorderColor = Color.Black;
             editarButton.FlatAppearance.MouseDownBackColor = Color.Goldenrod;
             editarButton.FlatAppearance.MouseOverBackColor = Color.Orange;
             editarButton.FlatStyle = FlatStyle.Flat;
             editarButton.Font = new Font("Montserrat", 12F);
-            editarButton.ForeColor = Color.White;
+            editarButton.ForeColor = Color.Black;
             editarButton.Location = new Point(724, 6);
             editarButton.Margin = new Padding(3, 4, 3, 4);
             editarButton.MinimumSize = new Size(183, 48);

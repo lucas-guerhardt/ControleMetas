@@ -51,7 +51,9 @@ namespace ControleMetas.Utils.FormatUtils
          * Retorna o nome formatado
          */
         {
-            if (string.IsNullOrEmpty(nome)) throw new NotFoundException("Nome não pode ser nulo ou vazio");
+            if (string.IsNullOrEmpty(nome)) throw new NotFoundException("Nome não pode ser nulo ou vazio"); 
+            nome = nome.Replace("'", "");
+            nome = nome.Replace("`", "");
             nome = nome.ToUpper();
             nome = nome.Trim();
             return nome;

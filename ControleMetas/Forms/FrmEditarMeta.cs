@@ -86,6 +86,16 @@ namespace ControleMetas.Forms
         private void FrmEditarMeta_Load(object sender, EventArgs e)
         {
             this.KeyPreview = true;
+
+            formatoComboBox.MouseWheel += ComboBox_MouseWheel;
+            categoriaComboBox.MouseWheel += ComboBox_MouseWheel;
+            vendedorComboBox.MouseWheel += ComboBox_MouseWheel;
+            periodicidadeComboBox.MouseWheel += ComboBox_MouseWheel;
+        }
+
+        private void ComboBox_MouseWheel(object? sender, MouseEventArgs e)
+        {
+            ((HandledMouseEventArgs)e).Handled = true;
         }
 
         private void NomeTextBox_TextChanged(object sender, EventArgs e)
