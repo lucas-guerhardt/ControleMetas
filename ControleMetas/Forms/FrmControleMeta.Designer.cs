@@ -184,6 +184,7 @@
             metasDataGridView.CellContentClick += MetasDataGridView_CellContentClick;
             metasDataGridView.CellDoubleClick += MetasDataGridView_CellDoubleClick;
             metasDataGridView.CellFormatting += MetasDataGridView_CellFormatting;
+            metasDataGridView.ColumnHeaderMouseClick += MetasDataGridView_ColumnHeaderMouseClick;
             // 
             // nenhumaMetaLabel
             // 

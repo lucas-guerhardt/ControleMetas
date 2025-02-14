@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,9 +20,15 @@ namespace ControleMetas.Forms
     {
         private readonly MetaController MetaController = MetaController.Instance;
 
-        List<MetaModel> metas;
+        private List<MetaModel> metas;
 
-        private BindingList<MetaModel> bindingList;
+        private readonly BindingList<MetaModel> bindingList;
+
+        private readonly BindingSource bindingSource = [];
+
+        private string colunaOrdenada = string.Empty;
+
+        private bool ordenacaoAscendente = true;
 
         public FrmControleMeta()
         {
@@ -91,6 +98,61 @@ namespace ControleMetas.Forms
 
         }
 
+        private void MetasDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if(metas == null || metas.Count == 0) return;
+
+            var coluna = metasDataGridView.Columns[e.ColumnIndex].Name;
+
+            if(colunaOrdenada == coluna)
+            {
+                ordenacaoAscendente = !ordenacaoAscendente;
+            }
+            else
+            {
+                ordenacaoAscendente = true;
+                colunaOrdenada = coluna;
+            }
+
+            switch (coluna)
+            {
+                case "Id":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Id).ToList() : metas.OrderByDescending(m => m.Id).ToList();
+                    break;
+
+                case "Nome":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Nome).ToList() : metas.OrderByDescending(m => m.Nome).ToList();
+                    break;
+
+                case "Vendedor":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Vendedor).ToList() : metas.OrderByDescending(m => m.Vendedor).ToList();
+                    break;
+
+                case "Formato":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Formato).ToList() : metas.OrderByDescending(m => m.Formato).ToList();
+                    break;
+
+                case "Categoria":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Categoria).ToList() : metas.OrderByDescending(m => m.Categoria).ToList();
+                    break;
+
+                case "Periodicidade":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Periodicidade).ToList() : metas.OrderByDescending(m => m.Periodicidade).ToList();
+                    break;
+
+                case "Valor":
+                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Valor).ToList() : metas.OrderByDescending(m => m.Valor).ToList();
+                    break;
+
+                default:
+                    return;
+            }
+
+            metasDataGridView.DataSource = new BindingList<MetaModel>(metas);
+        }
+
+        
+
         private void MetasDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -150,7 +212,6 @@ namespace ControleMetas.Forms
             }
         }
 
-        private BindingSource bindingSource = new BindingSource();
 
         private void AtualizaMetas()
         {
