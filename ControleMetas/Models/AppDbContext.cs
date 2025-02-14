@@ -13,6 +13,7 @@ namespace ControleMetas.Models
     /*Classe para criar o banco de dados*/
     {
         public DbSet<MetaModel> Metas { get; set; }
+        public DbSet<HistoricoModel> Historico { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string dotenvPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".env");
@@ -24,7 +25,7 @@ namespace ControleMetas.Models
 
             string connectionString = $"server=localhost;port={port};user={user};password={password};database=controle_metas";
 
-            optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8,0,40)));
+            optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 40)));
         }
 
         public void EnsureDataBaseCreated()

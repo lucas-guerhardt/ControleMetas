@@ -18,6 +18,8 @@ namespace ControleMetas.Controllers
     {
         private readonly MetaRepository _metaRepository;
 
+        private readonly HistoricoController _historicoController = HistoricoController.Instance;
+
         //Construtor Privado para Arquitetura Singleton
         private MetaController()
         {
@@ -42,6 +44,7 @@ namespace ControleMetas.Controllers
          * Retorna uma lista de MetaModel.
          */
         {
+            _historicoController.Create(new HistoricoModel("Listar Metas", DateTime.Now, "As metas foram listadas"));
             return _metaRepository.ListAll();
         }
 
@@ -55,7 +58,14 @@ namespace ControleMetas.Controllers
 
             var meta = _metaRepository.FindById(id);
 
-            return meta ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            if (meta == null)
+            {
+                _historicoController.Create(new HistoricoModel("Obter Meta por Id", DateTime.Now, $"A meta com Id {id} não foi encontrada."));
+                throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            }
+
+            _historicoController.Create(new HistoricoModel("Obter Meta por Id", DateTime.Now, $"A meta com Id {id} foi retornada."));
+            return meta;
         }
 
         public string Create(MetaModel meta)
@@ -69,6 +79,7 @@ namespace ControleMetas.Controllers
             meta.Nome = FormatUtils.FormatarNome(meta.Nome);
             meta.Valor /= 100;
 
+            _historicoController.Create(new HistoricoModel("Criar Nova Meta", DateTime.Now, $"Uma nova meta de nome {meta.Nome} foi criada."));
             return _metaRepository.Add(meta);
         }
 
@@ -78,13 +89,28 @@ namespace ControleMetas.Controllers
          * Retorna o Id da meta atualizada ou uma exceção caso a meta recebida seja nula.
          */
         {
-            if (string.IsNullOrEmpty(id)) throw new BusinessException("O Id não pode ser nulo ou vazio.");
+            if (string.IsNullOrEmpty(id))
+            {
+                _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta não pode ser atualizada pois o Id era nulo ou vazio."));
+                throw new BusinessException("O Id não pode ser nulo ou vazio.");
+            }
 
-            if (meta == null) throw new BusinessException("A meta não pode ser nula.");
+            if (meta == null)
+            {
+                _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta não pode ser atualizada pois a meta era nula."));
+                throw new BusinessException("A meta não pode ser nula.");
+            }
 
             var metaAtualizada = _metaRepository.Update(id, meta);
 
-            return metaAtualizada ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            if (metaAtualizada == null)
+            {
+                _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta com Id {id} não foi encontrada."));
+                throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            }
+
+            _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta com Id {id} foi atualizada."));
+            return metaAtualizada;
         }
 
         public string? Delete(string id)
@@ -93,11 +119,22 @@ namespace ControleMetas.Controllers
          * Retorna o Id da meta removida ou uma exceção caso a meta não seja encontrada.
          */
         {
-            if (string.IsNullOrEmpty(id)) throw new BusinessException("O Id não pode ser nulo ou vazio.");
+            if (string.IsNullOrEmpty(id))
+            {
+                _historicoController.Create(new HistoricoModel("Remover Meta", DateTime.Now, $"A meta não pode ser removida pois o Id era nulo ou vazio."));
+                throw new BusinessException("O Id não pode ser nulo ou vazio.");
+            }
 
             var metaRemovida = _metaRepository.Remove(id);
 
-            return metaRemovida ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            if (metaRemovida == null)
+            {
+                _historicoController.Create(new HistoricoModel("Remover Meta", DateTime.Now, $"A meta com Id {id} não foi encontrada."));
+                throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
+            }
+
+            _historicoController.Create(new HistoricoModel("Remover Meta", DateTime.Now, $"A meta com Id {id} foi removida."));
+            return metaRemovida;
         }
     }
 }

@@ -54,6 +54,12 @@ namespace ControleMetas.Forms
             nenhumaMetaLabel.Top = (metasDataGridView.Height - nenhumaMetaLabel.Height) / 2;
 
             metasDataGridView.AutoGenerateColumns = true;
+
+            if (metasDataGridView.Columns["Id"] != null)
+            {
+                metasDataGridView.Columns["Id"].Visible = false;
+            }
+
             metasDataGridView.AutoResizeColumns();
             metasDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             metasDataGridView.DataSource = bindingList;
@@ -87,9 +93,14 @@ namespace ControleMetas.Forms
                 EditarButton_Click(sender, e);
             }
 
-            if(e.KeyCode == Keys.F11)
+            if (e.KeyCode == Keys.F11)
             {
                 BuscarButton_Click(sender, e);
+            }
+
+            if(e.KeyCode == Keys.F4)
+            {
+                HistoricoButton_Click(sender, e);
             }
         }
 
@@ -100,11 +111,11 @@ namespace ControleMetas.Forms
 
         private void MetasDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if(metas == null || metas.Count == 0) return;
+            if (metas == null || metas.Count == 0) return;
 
             var coluna = metasDataGridView.Columns[e.ColumnIndex].Name;
 
-            if(colunaOrdenada == coluna)
+            if (colunaOrdenada == coluna)
             {
                 ordenacaoAscendente = !ordenacaoAscendente;
             }
@@ -151,7 +162,7 @@ namespace ControleMetas.Forms
             metasDataGridView.DataSource = new BindingList<MetaModel>(metas);
         }
 
-        
+
 
         private void MetasDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -208,6 +219,11 @@ namespace ControleMetas.Forms
         {
             metas = MetaController.Get();
 
+            if (metasDataGridView.Columns["Id"] != null)
+            {
+                metasDataGridView.Columns["Id"].Visible = false;
+            }
+
             if (metas == null || metas.Count == 0)
             {
                 nenhumaMetaLabel.Visible = true;
@@ -242,7 +258,11 @@ namespace ControleMetas.Forms
 
                 var confirmacao = MessageBox.Show($"Deseja realmente excluir as metas selecionadas? ({mensagem})", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                if (confirmacao == DialogResult.No) return;
+                if (confirmacao == DialogResult.No)
+                {
+                    AtualizaMetas();
+                    return;
+                }
 
                 foreach (DataGridViewRow row in selected)
                 {
@@ -316,7 +336,7 @@ namespace ControleMetas.Forms
 
         private void BuscarButton_Click(object sender, EventArgs e)
         {
-            if(buscarTextBox.Visible)
+            if (buscarTextBox.Visible)
             {
                 buscarTextBox.Visible = false;
                 buscarTextBox.Text = string.Empty;
@@ -333,24 +353,29 @@ namespace ControleMetas.Forms
 
             string filtro = buscarTextBox.Text.Trim().ToLower();
 
-            if(string.IsNullOrEmpty(filtro))
+            if (string.IsNullOrEmpty(filtro))
             {
-                metasDataGridView.DataSource = bindingList;
+                AtualizaMetas();
             }
             else
             {
                 var metasFiltradas = metas
-                    .Where(m => m.Nome.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
-                            || m.Id.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
-                            || m.Vendedor.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
-                            || m.Formato.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
-                            || m.Categoria.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                    .Where(m => m.Nome.Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
+                            || m.Id.Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
+                            || m.Vendedor.Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
+                            || m.Formato.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
+                            || m.Categoria.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
                             || m.Periodicidade.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
                             || m.Valor.ToString().Contains(filtro))
                     .ToList();
 
                 metasDataGridView.DataSource = new BindingList<MetaModel>(metasFiltradas);
             }
+        }
+
+        private void HistoricoButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

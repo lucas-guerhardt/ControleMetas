@@ -38,6 +38,7 @@
             metasDataGridView = new DataGridView();
             nenhumaMetaLabel = new Label();
             buscarTextBox = new TextBox();
+            historicoButton = new Button();
             botoesTablePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)metasDataGridView).BeginInit();
             SuspendLayout();
@@ -51,6 +52,7 @@
             botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
             botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
             botoesTablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            botoesTablePanel.Controls.Add(historicoButton, 1, 0);
             botoesTablePanel.Controls.Add(excluirButton, 0, 0);
             botoesTablePanel.Controls.Add(cancelarButton, 5, 0);
             botoesTablePanel.Controls.Add(adicionarButton, 4, 0);
@@ -209,6 +211,27 @@
             buscarTextBox.Visible = false;
             buscarTextBox.TextChanged += BuscarTextBox_TextChanged;
             // 
+            // historicoButton
+            // 
+            historicoButton.Anchor = AnchorStyles.None;
+            historicoButton.BackColor = Color.Transparent;
+            historicoButton.Cursor = Cursors.Hand;
+            historicoButton.FlatAppearance.BorderColor = Color.White;
+            historicoButton.FlatAppearance.MouseDownBackColor = Color.DarkSlateGray;
+            historicoButton.FlatAppearance.MouseOverBackColor = Color.Teal;
+            historicoButton.FlatStyle = FlatStyle.Flat;
+            historicoButton.Font = new Font("Montserrat", 12F);
+            historicoButton.ForeColor = Color.White;
+            historicoButton.Location = new Point(258, 6);
+            historicoButton.Margin = new Padding(3, 4, 3, 4);
+            historicoButton.MinimumSize = new Size(183, 48);
+            historicoButton.Name = "historicoButton";
+            historicoButton.Size = new Size(183, 48);
+            historicoButton.TabIndex = 7;
+            historicoButton.Text = "Histórico (F4)";
+            historicoButton.UseVisualStyleBackColor = false;
+            historicoButton.Click += HistoricoButton_Click;
+            // 
             // FrmControleMeta
             // 
             AutoScaleDimensions = new SizeF(8F, 18F);
@@ -246,5 +269,6 @@
         private Button editarButton;
         private Button buscarButton;
         private TextBox buscarTextBox;
+        private Button historicoButton;
     }
 }
