@@ -44,7 +44,6 @@ namespace ControleMetas.Controllers
          * Retorna uma lista de MetaModel.
          */
         {
-            _historicoController.Create(new HistoricoModel("Listar Metas", DateTime.Now, "As metas foram listadas"));
             return _metaRepository.ListAll();
         }
 
@@ -58,14 +57,7 @@ namespace ControleMetas.Controllers
 
             var meta = _metaRepository.FindById(id);
 
-            if (meta == null)
-            {
-                _historicoController.Create(new HistoricoModel("Obter Meta por Id", DateTime.Now, $"A meta com Id {id} não foi encontrada."));
-                throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
-            }
-
-            _historicoController.Create(new HistoricoModel("Obter Meta por Id", DateTime.Now, $"A meta com Id {id} foi retornada."));
-            return meta;
+            return meta ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
 
         public string Create(MetaModel meta)
@@ -105,7 +97,7 @@ namespace ControleMetas.Controllers
 
             if (metaAtualizada == null)
             {
-                _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta com Id {id} não foi encontrada."));
+                _historicoController.Create(new HistoricoModel("Atualizar Meta", DateTime.Now, $"A meta com nome {meta.Nome} não foi encontrada."));
                 throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
             }
 

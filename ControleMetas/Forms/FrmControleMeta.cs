@@ -54,18 +54,17 @@ namespace ControleMetas.Forms
             nenhumaMetaLabel.Top = (metasDataGridView.Height - nenhumaMetaLabel.Height) / 2;
 
             metasDataGridView.AutoGenerateColumns = true;
-
-            if (metasDataGridView.Columns["Id"] != null)
-            {
-                metasDataGridView.Columns["Id"].Visible = false;
-            }
-
             metasDataGridView.AutoResizeColumns();
             metasDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             metasDataGridView.DataSource = bindingList;
             metasDataGridView.ReadOnly = true;
             metasDataGridView.AllowUserToAddRows = false;
             metasDataGridView.Columns.Cast<DataGridViewColumn>().ToList().ForEach(col => col.SortMode = DataGridViewColumnSortMode.NotSortable);
+
+            if (metasDataGridView.Columns["Id"] != null)
+            {
+                metasDataGridView.Columns["Id"].Visible = false;
+            }
         }
 
         private void FrmControleMeta_KeyDown(object sender, KeyEventArgs e)
@@ -219,11 +218,6 @@ namespace ControleMetas.Forms
         {
             metas = MetaController.Get();
 
-            if (metasDataGridView.Columns["Id"] != null)
-            {
-                metasDataGridView.Columns["Id"].Visible = false;
-            }
-
             if (metas == null || metas.Count == 0)
             {
                 nenhumaMetaLabel.Visible = true;
@@ -237,6 +231,12 @@ namespace ControleMetas.Forms
             bindingSource.DataSource = metas;
 
             metasDataGridView.DataSource = bindingSource;
+
+            if (metasDataGridView.Columns["Id"] != null)
+            {
+                metasDataGridView.Columns["Id"].Visible = false;
+            }
+
             metasDataGridView.Refresh();
         }
 
@@ -375,7 +375,8 @@ namespace ControleMetas.Forms
 
         private void HistoricoButton_Click(object sender, EventArgs e)
         {
-
+            FrmHistoricoMeta frmHistoricoMeta = new();
+            frmHistoricoMeta.ShowDialog();
         }
     }
 }
