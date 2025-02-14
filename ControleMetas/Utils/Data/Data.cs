@@ -9,8 +9,10 @@ using ControleMetas.Models;
 namespace ControleMetas.Utils.Data
 {
     public static class Data
+    /*Classe para gerar dados iniciais*/
     {
         public static void GerarVendedores()
+        /*Método para gerar vendedores iniciais*/
         {
             VendedorController VendedorController = new();
 

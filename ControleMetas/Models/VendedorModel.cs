@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ControleMetas.Models
 {
     public class VendedorModel
+    /*Classe para representar o vendedor*/
     {
         public string Id { get; set; } = string.Empty;
 

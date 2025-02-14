@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ControleMetas.Utils.FontUtils
 {
     public static class FontUtils
+    /*Classe utilitaria para carregar fontes personalizadas*/
     {
         private static PrivateFontCollection _pfc = new PrivateFontCollection();
 

@@ -12,10 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.Json;
 namespace ControleMetas.Repositories
 {
     public class MetaRepository(AppDbContext context)
+    /*Classe para manipular as metas no banco de dados*/
     {
         private readonly AppDbContext _context = context;
 
         public string Add(MetaModel meta)
+        /* Método para adicionar uma nova meta no banco de dados
+         * Recebe um objeto do tipo MetaModel
+         * Retorna o id da meta adicionada
+         */
         {
             _context.Add(meta);
             _context.SaveChanges();
@@ -23,11 +28,18 @@ namespace ControleMetas.Repositories
         }
 
         public List<MetaModel> ListAll()
+        /* Método para listar todas as metas no banco de dados
+         * Retorna uma lista de MetaModel
+         */
         {
-            return _context.Metas.ToList();
+            return [.. _context.Metas];
         }
 
         public MetaModel? FindById(string id)
+        /* Método para encontrar uma meta no banco de dados pelo id
+         * Recebe o id da meta
+         * Retorna um objeto do tipo MetaModel
+         */
         {
             if (!_context.Metas.Any()) return null;
 
@@ -35,6 +47,10 @@ namespace ControleMetas.Repositories
         }
 
         public string? Update(string id, MetaModel meta)
+        /* Método para atualizar uma meta no banco de dados
+         * Recebe o id da meta e um objeto do tipo MetaModel
+         * Retorna o id da meta atualizada
+         */
         {
             var metaToUpdate = FindById(id);
 
@@ -64,11 +80,12 @@ namespace ControleMetas.Repositories
         }
 
         public string? Remove(string id)
+        /* Método para remover uma meta do banco de dados
+         * Recebe o id da meta
+         * Retorna o id da meta removida ou uma exceção caso a meta não seja encontrada
+         */
         {
-            var meta = FindById(id);
-
-            if (meta == null) throw new NotFoundException($"A meta com id: {id} não foi encontrada");
-
+            var meta = FindById(id) ?? throw new NotFoundException($"A meta com id: {id} não foi encontrada");
             _context.Metas.Remove(meta);
             _context.SaveChanges();
 

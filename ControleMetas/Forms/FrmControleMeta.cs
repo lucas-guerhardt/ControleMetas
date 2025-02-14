@@ -117,31 +117,31 @@ namespace ControleMetas.Forms
             switch (coluna)
             {
                 case "Id":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Id).ToList() : metas.OrderByDescending(m => m.Id).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Id)] : [.. metas.OrderByDescending(m => m.Id)];
                     break;
 
                 case "Nome":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Nome).ToList() : metas.OrderByDescending(m => m.Nome).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Nome)] : [.. metas.OrderByDescending(m => m.Nome)];
                     break;
 
                 case "Vendedor":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Vendedor).ToList() : metas.OrderByDescending(m => m.Vendedor).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Vendedor)] : [.. metas.OrderByDescending(m => m.Vendedor)];
                     break;
 
                 case "Formato":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Formato).ToList() : metas.OrderByDescending(m => m.Formato).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Formato)] : [.. metas.OrderByDescending(m => m.Formato)];
                     break;
 
                 case "Categoria":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Categoria).ToList() : metas.OrderByDescending(m => m.Categoria).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Categoria)] : [.. metas.OrderByDescending(m => m.Categoria)];
                     break;
 
                 case "Periodicidade":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Periodicidade).ToList() : metas.OrderByDescending(m => m.Periodicidade).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Periodicidade)] : [.. metas.OrderByDescending(m => m.Periodicidade)];
                     break;
 
                 case "Valor":
-                    metas = ordenacaoAscendente ? metas.OrderBy(m => m.Valor).ToList() : metas.OrderByDescending(m => m.Valor).ToList();
+                    metas = ordenacaoAscendente ? [.. metas.OrderBy(m => m.Valor)] : [.. metas.OrderByDescending(m => m.Valor)];
                     break;
 
                 default:
@@ -191,22 +191,13 @@ namespace ControleMetas.Forms
 
                 if (e.Value != null && decimal.TryParse(e.Value.ToString(), out decimal valor))
                 {
-                    switch (formato)
+                    e.Value = formato switch
                     {
-                        case "Monetario":
-                            e.Value = $"R$ {valor:F2}";
-                            break;
-                        case "Litros":
-                            e.Value = $"{valor:F2} Litros";
-                            break;
-                        case "Unidades":
-                            e.Value = $"{valor:F2} Unidades";
-                            break;
-                        default:
-                            e.Value = valor;
-                            break;
-                    }
-
+                        "Monetario" => $"R$ {valor:F2}",
+                        "Litros" => $"{valor:F2} Litros",
+                        "Unidades" => $"{valor:F2} Unidades",
+                        _ => valor,
+                    };
                     e.FormattingApplied = true;
                 }
             }
@@ -349,7 +340,13 @@ namespace ControleMetas.Forms
             else
             {
                 var metasFiltradas = metas
-                    .Where(m => m.Nome.ToLower().Contains(filtro) || m.Id.ToLower().Contains(filtro) || m.Vendedor.ToLower().Contains(filtro) || m.Formato.ToString().ToLower().Contains(filtro) || m.Categoria.ToString().ToLower().Contains(filtro) || m.Periodicidade.ToString().ToLower().Contains(filtro) || m.Valor.ToString().Contains(filtro))
+                    .Where(m => m.Nome.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                            || m.Id.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                            || m.Vendedor.Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                            || m.Formato.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                            || m.Categoria.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase) 
+                            || m.Periodicidade.ToString().Contains(filtro, StringComparison.CurrentCultureIgnoreCase)
+                            || m.Valor.ToString().Contains(filtro))
                     .ToList();
 
                 metasDataGridView.DataSource = new BindingList<MetaModel>(metasFiltradas);

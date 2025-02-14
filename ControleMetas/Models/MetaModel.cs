@@ -11,6 +11,7 @@ namespace ControleMetas.Models
 {
     [Table("Metas")]
     public class MetaModel
+    /*Classe para representar a meta de vendas*/
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

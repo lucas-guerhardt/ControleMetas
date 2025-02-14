@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ControleMetas.Models
 {
     public class AppDbContext : DbContext
+    /*Classe para criar o banco de dados*/
     {
         public DbSet<MetaModel> Metas { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -14,11 +14,12 @@ using ControleMetas.Utils.FormatUtils;
 namespace ControleMetas.Controllers
 {
     public class MetaController
+    /* A classe Controller faz a comunicação entre a View e o Model.*/
     {
         private readonly MetaRepository _metaRepository;
 
         //Construtor Privado para Arquitetura Singleton
-        private MetaController() 
+        private MetaController()
         {
             var dbContext = new AppDbContext();
             _metaRepository = new MetaRepository(dbContext);
@@ -36,17 +37,19 @@ namespace ControleMetas.Controllers
             }
         }
 
-        //Métodos de CRUD
-
-        //Método para listar todas as metas
         public List<MetaModel> Get()
+        /* Método responsável por listar todas as metas
+         * Retorna uma lista de MetaModel.
+         */
         {
             return _metaRepository.ListAll();
         }
 
-
-        //Método para buscar uma meta pelo Id
         public MetaModel? Get(string id)
+        /* Método responsável por buscar uma meta pelo Id
+         * Recebe uma string id
+         * Retorna um MetaModel ou uma exceção caso a meta não seja encontrada.
+         */
         {
             if (string.IsNullOrEmpty(id)) throw new BusinessException("O Id não pode ser nulo ou vazio.");
 
@@ -55,21 +58,25 @@ namespace ControleMetas.Controllers
             return meta ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
 
-
-        //Método para criar uma nova meta
         public string Create(MetaModel meta)
+        /* Método responsável por criar uma nova meta
+         * Recebe um MetaModel
+         * Retorna o Id da meta criada ou uma exceção caso a meta recebida seja nula.
+         */
         {
             if (meta == null) throw new BusinessException("A meta não pode ser nula.");
 
             meta.Nome = FormatUtils.FormatarNome(meta.Nome);
-            meta.Valor = meta.Valor / 100;
+            meta.Valor /= 100;
 
             return _metaRepository.Add(meta);
         }
 
-
-        //Método para atualizar uma meta
         public string? Update(string id, MetaModel meta)
+        /* Método responsável por atualizar uma meta
+         * Recebe uma string id e um MetaModel
+         * Retorna o Id da meta atualizada ou uma exceção caso a meta recebida seja nula.
+         */
         {
             if (string.IsNullOrEmpty(id)) throw new BusinessException("O Id não pode ser nulo ou vazio.");
 
@@ -80,9 +87,11 @@ namespace ControleMetas.Controllers
             return metaAtualizada ?? throw new NotFoundException($"A meta com Id {id} não foi encontrada.");
         }
 
-
-        //Método para deletar uma meta
         public string? Delete(string id)
+        /* Método responsável por remover uma meta
+         * Recebe uma string id
+         * Retorna o Id da meta removida ou uma exceção caso a meta não seja encontrada.
+         */
         {
             if (string.IsNullOrEmpty(id)) throw new BusinessException("O Id não pode ser nulo ou vazio.");
 
